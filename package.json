@@ -1,0 +1,32 @@
+{
+  "name": "mint.ts",
+  "version": "0.0.4",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "url": "https://github.com/dusanjovanov/mint"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "size": "npx pkg-size"
+  },
+  "keywords": [
+    "frontend",
+    "ui"
+  ],
+  "author": "Dusan Jovanov",
+  "license": "MIT",
+  "devDependencies": {
+    "csstype": "^3.1.2",
+    "prettier": "2.8",
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "fast-array-diff": "^1.1.0"
+  }
+}
