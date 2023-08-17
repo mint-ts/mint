@@ -56,4 +56,5 @@ export const h = {
   select: f("select"),
   option: f("option"),
   textarea: f("textarea"),
+  main: f("main"),
 };

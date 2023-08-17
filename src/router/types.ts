@@ -1,7 +1,12 @@
-import { RoutePath } from "./RoutePath";
+import { MintNode } from "../types";
+import { Path } from "./Path";
 
-export type GenericUserRoutes = {
-  [key: string]: {
-    path: RoutePath<any>;
-  };
+export type RouteConfig = {
+  path: Path;
+  render: () => MintNode;
+  routes?: RouteConfig[];
+};
+
+export type Match = {
+  params: Record<string, any>;
 };

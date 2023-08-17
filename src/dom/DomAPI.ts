@@ -59,8 +59,7 @@ export class DomAPI implements IDomAPI {
 
         return [dom];
       }
-      case "provider":
-      case "frag": {
+      case "provider": {
         return this.createMultiple(...el.data.children);
       }
       case "list": {
@@ -129,7 +128,6 @@ export class DomAPI implements IDomAPI {
     switch (el.type) {
       case "component":
       case "provider":
-      case "frag":
       case "list":
       case "show": {
         return this.getFirstMountedNodeFromMultiple(...el.data.children);
@@ -155,7 +153,6 @@ export class DomAPI implements IDomAPI {
   getAllMountedNodes(el: MintElement): DOMNode[] {
     switch (el.type) {
       case "component":
-      case "frag":
       case "provider":
       case "list":
       case "show": {
@@ -204,8 +201,7 @@ export class DomAPI implements IDomAPI {
         this.destroyMultiple(...el.data.children);
         break;
       }
-      case "provider":
-      case "frag": {
+      case "provider": {
         this.destroyMultiple(...el.data.children);
         break;
       }
@@ -367,8 +363,6 @@ export class DomAPI implements IDomAPI {
   }
 
   render(node: MintNode, container: HTMLElement) {
-    const domAPI = new DomAPI();
-
     const elements = filterNodes(node);
 
     const containerEl = new MintElement({
@@ -382,7 +376,7 @@ export class DomAPI implements IDomAPI {
     });
 
     initElementsChildren(containerEl);
-    const domNodes = domAPI.createMultiple(...elements);
+    const domNodes = this.createMultiple(...elements);
 
     currentComponent.current = undefined;
 
@@ -390,7 +384,7 @@ export class DomAPI implements IDomAPI {
       container.append(domNode);
     }
 
-    domAPI.callOnMount(...elements);
+    this.callOnMount(...elements);
   }
 }
 

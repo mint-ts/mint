@@ -11,6 +11,7 @@ export const map = <Item>(
     data: {
       reactiveArray,
       render,
+      children: [],
     },
   });
 };

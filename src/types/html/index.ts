@@ -19,3 +19,5 @@ export type HTMLHeadingElementProps = MintCommonProps<HTMLHeadingElement>;
 export type HTMLLabelElementProps = MintCommonProps<HTMLLabelElement>;
 
 export type HTMLHeaderElementProps = MintCommonProps<HTMLElement>;
+
+export type HTMLMainElementProps = MintCommonProps<HTMLElement>;

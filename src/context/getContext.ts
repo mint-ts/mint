@@ -2,7 +2,7 @@ import { currentComponent } from "../currentComponent";
 import { MintElement } from "../elements";
 import { Context } from "./Context";
 
-/** Looks for the nearest MintProviderElement with a matching context
+/** Looks for the nearest ancestor MintElement of type "provider" with a matching context
  * and returns it's value
  */
 export const getContext = <Value>(context: Context<Value>) => {

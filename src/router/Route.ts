@@ -1,40 +1,42 @@
-import { createContext } from "../context";
+import { createContext, getContext } from "../context";
 import { computed, show, state } from "../factory";
-import { MintNode } from "../types";
-import { RoutePath } from "./RoutePath";
 import { Router } from "./Router";
+import { Match, RouteConfig } from "./types";
+import { mergePaths } from "./utils";
 
-export class Route<Params> {
-  constructor({ key, path, router }: RouteConfig<Params>) {
-    this.key = key;
+export class Route<Params = {}> {
+  constructor({
+    path,
+    routes = [],
+    render: renderFn,
+    router,
+  }: RouteConfig & { router: Router }) {
     this.path = path;
+    this.routes = routes.map(
+      (rc) => new Route({ ...rc, path: mergePaths(this.path, rc.path), router })
+    );
     this.router = router;
-    this.match = state(null);
-
-    this.isMatched = computed([this.match], () => !!this.match.value);
+    this.renderFn = renderFn;
   }
-  key;
   path;
-  router;
-  match;
-  isMatched;
+  routes: Route[] = [];
+  router: Router = {} as Router;
+  match = state<Match | null>(null);
+  params = computed(
+    [this.match],
+    () => (this.match.value?.params ?? {}) as Params
+  );
+  renderFn;
 
-  getHref(params: Params) {
-    return this.path.getHref(params);
-  }
-
-  render(children: MintNode) {
-    return show(
-      this.isMatched,
-      RouteContext.provider({ value: this }, children)
+  render() {
+    return RouteContext.provider(
+      { value: this },
+      show(this.match, this.renderFn())
     );
   }
 }
 
-const RouteContext = createContext();
+const RouteContext = createContext<Route<any>>();
 
-type RouteConfig<Params> = {
-  key: string;
-  path: RoutePath<Params>;
-  router: Router<any>;
-};
+export const getRoute = <Params = {}>() =>
+  getContext<Route<Params>>(RouteContext);

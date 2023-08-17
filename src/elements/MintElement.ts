@@ -15,6 +15,9 @@ export class MintElement {
       this.data.onMounts = new Set();
       this.data.onDestroys = new Set();
     }
+    if (this.type === "list") {
+      this.data.prevArrayValue = [...this.data.reactiveArray.value];
+    }
   }
   type;
   parent: MintElement | undefined;
@@ -29,5 +32,4 @@ export type MintElementType =
   | "reactive"
   | "show"
   | "list"
-  | "frag"
   | "provider";

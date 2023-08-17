@@ -8,6 +8,7 @@ import {
   HTMLInputElementProps,
   HTMLLIElementProps,
   HTMLLabelElementProps,
+  HTMLMainElementProps,
   HTMLOptionElementProps,
   HTMLSelectElementProps,
   HTMLTextAreaProps,
@@ -33,4 +34,5 @@ export type HTMLElementPropMap = {
   select: HTMLSelectElementProps;
   option: HTMLOptionElementProps;
   textarea: HTMLTextAreaProps;
+  main: HTMLMainElementProps;
 };

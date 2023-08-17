@@ -57,10 +57,10 @@ export const initElementsChildren = (el: MintElement) => {
   });
 };
 
-export const getReactiveValue = (value: any) => {
+export const getReactiveValue = <T>(value: T | Reactive<T>) => {
   return isReactive(value) ? value.value : value;
 };
 
 export const isParentElement = (el: MintElement) => {
-  return ["dom", "comp", "provider", "frag", "show", "list"].includes(el.type);
+  return ["dom", "comp", "provider", "show", "list"].includes(el.type);
 };

@@ -10,8 +10,11 @@ export class State<Value = any> {
   }
 
   set value(value: Value) {
+    const prevValue = this._value;
     this._value = value;
-    this.notify();
+    if (!Object.is(prevValue, this._value)) {
+      this.notify();
+    }
   }
 
   private notify() {

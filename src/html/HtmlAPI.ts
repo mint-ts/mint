@@ -1,14 +1,14 @@
 import { currentComponent } from "../currentComponent";
-import { MintElement } from "../types";
+import { MintElement } from "../elements";
 import { filterNodes } from "../utils";
 import { IHtmlAPI } from "./types";
 
 export class HtmlAPI implements IHtmlAPI {
   create(el: MintElement): string[] {
     switch (el.type) {
-      case "comp": {
+      case "component": {
         currentComponent.current = el;
-        const elements = filterNodes(el.render(el.props));
+        const elements = filterNodes(el.data.render(el.data.props));
         currentComponent.current = undefined;
 
         elements.forEach((childEl, i) => {
@@ -16,16 +16,16 @@ export class HtmlAPI implements IHtmlAPI {
           childEl.index = i;
         });
 
-        el.children = elements;
+        el.data.children = elements;
 
-        return this.createMultiple(...el.children);
+        return this.createMultiple(...el.data.children);
       }
       case "dom": {
-        let s = `<${el.tag}`;
+        let s = `<${el.data.tag}`;
 
         let props: string[] = [];
 
-        for (const [key, value] of Object.entries(el.props)) {
+        for (const [key, value] of Object.entries(el.data.props)) {
           if (isEventProp(key)) continue;
           else if (key === "style") {
             props.push(`style="${getStyleStringFromStyleObject(value)}"`);
@@ -40,14 +40,14 @@ export class HtmlAPI implements IHtmlAPI {
           s += ` ${props.join(" ")}`;
         }
 
-        if (el.children.length > 0) {
+        if (el.data.children.length > 0) {
           s += ">";
-          for (const child of el.children) {
+          for (const child of el.data.children) {
             const childStrArr = this.create(child);
 
             s += childStrArr.join("");
           }
-          s += `</${el.tag}>`;
+          s += `</${el.data.tag}>`;
         }
         //
         else {
@@ -56,17 +56,16 @@ export class HtmlAPI implements IHtmlAPI {
 
         return [s];
       }
-      case "frag":
       case "provider": {
-        return this.createMultiple(...el.children);
+        return this.createMultiple(...el.data.children);
       }
       case "text": {
-        return [el.text];
+        return [el.data.text];
       }
       case "reactive": {
-        el.reactive.subscribe(() => {});
+        el.data.reactive.subscribe(() => {});
 
-        return [el.reactive.value];
+        return [el.data.reactive.value];
       }
       default:
         return [];
