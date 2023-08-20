@@ -1,13 +1,13 @@
-import { MintElement } from "./elements";
+import { MintComponentElement } from "./elements";
 
 export const currentComponent = (() => {
-  let current: MintElement | undefined = undefined;
+  let current: MintComponentElement | undefined = undefined;
 
   return {
     get current() {
       return current;
     },
-    set current(currentComponent: MintElement | undefined) {
+    set current(currentComponent: MintComponentElement | undefined) {
       current = currentComponent;
     },
   };

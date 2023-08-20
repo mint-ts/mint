@@ -1,4 +1,5 @@
 import { Reactive } from "../types";
+import { SubscribeCallback, UnsubscribeFn } from "./types";
 
 export class Computed<Value = any> {
   constructor(reactives: Reactive[], compute: () => Value) {
@@ -12,7 +13,13 @@ export class Computed<Value = any> {
     });
   }
   private _value;
-  private subs = new Set<any>();
+  private _subs = new Set<SubscribeCallback>();
+  public get subs() {
+    return this._subs;
+  }
+  public set subs(value) {
+    this._subs = value;
+  }
 
   get value() {
     return this._value;
@@ -22,7 +29,7 @@ export class Computed<Value = any> {
     this.subs.forEach((s) => s());
   }
 
-  subscribe(sub: any) {
+  subscribe(sub: SubscribeCallback): UnsubscribeFn {
     this.subs.add(sub);
     return () => {
       this.subs.delete(sub);

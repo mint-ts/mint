@@ -1,9 +1,11 @@
+import { SubscribeCallback, UnsubscribeFn } from "./types";
+
 export class State<Value = any> {
   constructor(initialValue: Value) {
     this._value = initialValue;
   }
   private _value;
-  private subs = new Set<any>();
+  private subs = new Set<SubscribeCallback>();
 
   get value() {
     return this._value;
@@ -21,7 +23,7 @@ export class State<Value = any> {
     this.subs.forEach((s) => s());
   }
 
-  subscribe(sub: any) {
+  subscribe(sub: SubscribeCallback): UnsubscribeFn {
     this.subs.add(sub);
     return () => {
       this.subs.delete(sub);

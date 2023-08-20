@@ -1,15 +1,12 @@
-import { MintElement } from "../elements";
+import { MintComponentElement } from "../elements";
 import { MintNode } from "../types";
 
-/** Creates a component factory which creates a new MintElement of type component */
+/**
+ * Creates a component factory which creates a new MintComponentElement
+ * @returns (props: Props) => MintComponentElement
+ */
 export const component =
   <Props = void>(render: (props: Props) => MintNode) =>
   (props: Props) => {
-    return new MintElement({
-      type: "component",
-      data: {
-        render,
-        props,
-      },
-    });
+    return new MintComponentElement(render, (props ?? {}) as object);
   };

@@ -1,4 +1,9 @@
-import { MintElement } from "./elements";
+import {
+  MintElement,
+  MintParentElement,
+  MintReactiveElement,
+  MintTextElement,
+} from "./elements";
 import { Computed, State } from "./reactive";
 import { MintEmptyNode, MintNode, MintTextNode, Reactive } from "./types";
 
@@ -21,25 +26,11 @@ export const filterNodes = (...nodes: MintNode[]) => {
   for (const node of nodes.flat(Infinity as 1)) {
     if (isEmptyNode(node)) continue;
     if (isTextNode(node)) {
-      elements.push(
-        new MintElement({
-          type: "text",
-          data: {
-            text: String(node),
-          },
-        })
-      );
+      elements.push(new MintTextElement(String(node)));
     }
     //
     else if (isReactive(node)) {
-      elements.push(
-        new MintElement({
-          type: "reactive",
-          data: {
-            reactive: node,
-          },
-        })
-      );
+      elements.push(new MintReactiveElement(node));
     }
     //
     else {
@@ -50,10 +41,10 @@ export const filterNodes = (...nodes: MintNode[]) => {
   return elements;
 };
 
-export const initElementsChildren = (el: MintElement) => {
-  el.data.children.forEach((c: MintElement, i: number) => {
-    c.parent = el;
-    c.index = i;
+export const initElementsChildren = (el: MintParentElement) => {
+  el.children.forEach((child, i) => {
+    child.parent = el;
+    child.index = i;
   });
 };
 
@@ -61,6 +52,6 @@ export const getReactiveValue = <T>(value: T | Reactive<T>) => {
   return isReactive(value) ? value.value : value;
 };
 
-export const isParentElement = (el: MintElement) => {
-  return ["dom", "comp", "provider", "show", "list"].includes(el.type);
+export const isParentElement = (el: MintElement): el is MintParentElement => {
+  return ["dom", "component", "provider", "show", "list"].includes(el.type);
 };

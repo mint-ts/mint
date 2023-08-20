@@ -2,8 +2,8 @@ import { MintElement } from "../elements";
 
 export interface IDomAPI<T = MintElement> {
   create(el: T): DOMNode[];
-  getFirstMountedNode(el: T): DOMNode | undefined;
-  getAllMountedNodes(el: T): DOMNode[];
+  getFirstInsertedDOMNode(el: T): DOMNode | undefined;
+  getDOMNodesForInsertion(el: T): DOMNode[];
   destroy(el: T): void;
 }
 

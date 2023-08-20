@@ -1,12 +1,10 @@
 import { currentComponent } from "../currentComponent";
 
-/** Callback is called when the component's tree
- * is removed from the DOM
- */
+/** Callback is called when the component's tree is unmounted */
 export const onDestroy = (callback: () => void) => {
   const current = currentComponent.current;
 
   if (current) {
-    current.data.onDestroys.add(callback);
+    current.onDestroys.add(callback);
   }
 };
