@@ -11,7 +11,6 @@ import { DOMNode } from "./types";
 export const create = (el: MintElement): DOMNode[] => {
   switch (el.type) {
     case "dom": {
-      console.log(createDOMElement)
       return createDOMElement(el);
     }
     case "component": {
