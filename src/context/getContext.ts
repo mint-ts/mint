@@ -2,8 +2,9 @@ import { currentComponent } from "../currentComponent";
 import { MintElement } from "../elements";
 import { Context } from "./Context";
 
-/** Looks for the nearest ancestor MintElement of type "provider" with a matching context
- * and returns it's value
+/** Looks for the nearest ancestor MintProviderElement with a matching context
+ * and returns it's value.
+ * @returns Value passed to provider
  */
 export const getContext = <Value>(context: Context<Value>) => {
   const component = currentComponent.current;
@@ -13,8 +14,8 @@ export const getContext = <Value>(context: Context<Value>) => {
   if (!current) return {} as Value;
 
   while (current) {
-    if (current.type === "provider" && current.data.context === context) {
-      return current.data.value as Value;
+    if (current.type === "provider" && current.context === context) {
+      return current.value as Value;
     }
     current = current.parent;
 
