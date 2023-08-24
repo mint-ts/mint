@@ -1,6 +1,6 @@
 import { MintDOMElement } from "../elements";
 import { HTMLElementPropMap, MintNode } from "../types";
-import { filterNodes } from "../utils";
+import { filterNodes, isPlainObject } from "../utils";
 
 type Factory<Tag extends keyof HTMLElementPropMap> = {
   /** Factory function for creating a MintDOMElement */
@@ -16,10 +16,7 @@ const f = <Tag extends keyof HTMLElementPropMap>(tag: Tag) => {
     let props = {};
     let _children = [...children];
 
-    if (
-      typeof propsOrChild === "object" &&
-      propsOrChild.constructor === Object
-    ) {
+    if (isPlainObject(propsOrChild)) {
       props = propsOrChild;
     } else {
       _children = [propsOrChild, ...children];

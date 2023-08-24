@@ -1,3 +1,4 @@
+import { TextElementHTMLNode } from "../render";
 import { CleanupFn, MintParentElement } from "./types";
 
 export class MintTextElement {
@@ -9,6 +10,7 @@ export class MintTextElement {
   index = 0;
   parent: MintParentElement | undefined;
   dom: Text | undefined;
+  htmlNode: TextElementHTMLNode | undefined;
   isInserted = false;
   cleanups = new Set<CleanupFn>();
 }

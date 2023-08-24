@@ -1,3 +1,4 @@
+import { ShowElementHTMLNode } from "../render";
 import { Reactive } from "../types";
 import { initElementsChildren } from "../utils";
 import { CleanupFn, MintElement, MintParentElement } from "./types";
@@ -16,4 +17,5 @@ export class MintShowElement {
   parent: MintParentElement | undefined;
   isInserted = false;
   cleanups = new Set<CleanupFn>();
+  htmlNode: ShowElementHTMLNode | undefined;
 }
