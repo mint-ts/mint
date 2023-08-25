@@ -7,7 +7,7 @@ export class MintDOMElement {
     this.props = props;
     this.children = children;
 
-    initElementsChildren(this);
+    initElementsChildren(this, ...this.children);
   }
   type = "dom" as const;
   tag;

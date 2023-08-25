@@ -1,4 +1,5 @@
 import { Context } from "../context";
+import { initElementsChildren } from "../utils";
 import { CleanupFn, MintElement, MintParentElement } from "./types";
 
 export class MintProviderElement {
@@ -6,6 +7,8 @@ export class MintProviderElement {
     this.value = value;
     this.children = children;
     this.context = context;
+
+    initElementsChildren(this, ...this.children);
   }
   type = "provider" as const;
   value;

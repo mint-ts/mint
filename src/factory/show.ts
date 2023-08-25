@@ -6,6 +6,6 @@ import { filterNodes } from "../utils";
  * Used for conditional rendering of nodes
  * @returns MintShowElement
  * */
-export const show = (when: Reactive, ...nodes: MintNode[]) => {
-  return new MintShowElement(when, filterNodes(...nodes));
+export const show = (when: Reactive, yes: MintNode, no?: MintNode) => {
+  return new MintShowElement(when, filterNodes(yes), filterNodes(no));
 };
