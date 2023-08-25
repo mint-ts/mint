@@ -12,7 +12,8 @@
     "default": "./dist/index.js"
   },
   "repository": {
-    "url": "https://github.com/dusanjovanov/mint"
+    "type": "git",
+    "url": "https://github.com/mint-ts/mint"
   },
   "scripts": {
     "build": "tsup",
