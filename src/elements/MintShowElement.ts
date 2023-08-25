@@ -4,15 +4,34 @@ import { initElementsChildren } from "../utils";
 import { CleanupFn, MintElement, MintParentElement } from "./types";
 
 export class MintShowElement {
-  constructor(when: Reactive, children: MintElement[]) {
+  constructor(when: Reactive, yes: MintElement[], no: MintElement[] = []) {
     this.when = when;
-    this.children = children;
+    this.yes = yes;
+    this.no = no;
 
-    initElementsChildren(this);
+    initElementsChildren(this, ...this.children);
   }
+
+  get condition() {
+    return Boolean(this.when.value);
+  }
+
+  get prevCondition() {
+    return Boolean(this.when.prevValue);
+  }
+
+  get children() {
+    return this.condition ? this.yes : this.no;
+  }
+
+  get notShownChildren() {
+    return this.condition ? this.no : this.yes;
+  }
+
   type = "show" as const;
   when;
-  children;
+  yes;
+  no;
   index = 0;
   parent: MintParentElement | undefined;
   isInserted = false;

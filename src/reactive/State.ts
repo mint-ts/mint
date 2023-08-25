@@ -3,8 +3,10 @@ import { SubscribeCallback, UnsubscribeFn } from "./types";
 export class State<Value = any> {
   constructor(initialValue: Value) {
     this._value = initialValue;
+    this._prevValue = this._value;
   }
   private _value;
+  private _prevValue;
   private subs = new Set<SubscribeCallback>();
 
   get value() {
@@ -12,11 +14,15 @@ export class State<Value = any> {
   }
 
   set value(value: Value) {
-    const prevValue = this._value;
+    this._prevValue = this._value;
     this._value = value;
-    if (!Object.is(prevValue, this._value)) {
+    if (!Object.is(this._prevValue, this._value)) {
       this.notify();
     }
+  }
+
+  get prevValue() {
+    return this._prevValue;
   }
 
   private notify() {

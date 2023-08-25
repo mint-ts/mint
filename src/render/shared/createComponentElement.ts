@@ -1,16 +1,13 @@
 import { currentComponent } from "../../currentComponent";
 import { MintComponentElement } from "../../elements";
-import { filterNodes } from "../../utils";
+import { filterNodes, initElementsChildren } from "../../utils";
 
 export const createComponentElement = (el: MintComponentElement) => {
   currentComponent.current = el;
   const elements = filterNodes(el.render(el.props));
   currentComponent.current = undefined;
 
-  elements.forEach((childEl, i) => {
-    childEl.parent = el;
-    childEl.index = i;
-  });
+  initElementsChildren(el, ...elements);
 
   el.children = elements;
 };

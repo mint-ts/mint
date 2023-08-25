@@ -6,8 +6,7 @@ import { destroy } from "../destroy";
 import { insertChildElements } from "../insertChildElements";
 
 export const patch = (el: MintListElement) => {
-  const patchItems = getPatch(el.prevArray ?? [], el.array.value);
-  el.prevArray = el.array.value;
+  const patchItems = getPatch(el.array.prevValue, el.array.value);
 
   for (const patchItem of patchItems) {
     switch (patchItem.type) {

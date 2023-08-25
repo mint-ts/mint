@@ -4,9 +4,7 @@ import { isParentElement } from "../../utils";
 /** Called when elements are inserted into the DOM */
 export const onInsertion = (...els: MintElement[]) => {
   for (const el of els) {
-    // @ts-ignore
-    if (el.parent.type === "show" && el.parent.when.value === false) {
-      // el.isMounted = true;
+    if (el.parent!.type === "show" && el.parent!.when.value === false) {
     } else {
       el.isInserted = true;
     }
