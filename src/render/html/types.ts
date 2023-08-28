@@ -12,7 +12,6 @@ export type TextElementHTMLNode = {
 
 export type ShowElementHTMLNode = {
   type: "show";
-  isShown: boolean;
   children: HTMLNode[];
 };
 

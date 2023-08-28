@@ -1,12 +1,12 @@
-import { MintDOMElement } from "../elements";
+import { MintElementValue } from "../elements";
 import { HTMLElementPropMap, MintNode } from "../types";
-import { filterNodes, isPlainObject } from "../utils";
+import { isPlainObject } from "../utils";
 
 type Factory<Tag extends keyof HTMLElementPropMap> = {
   /** Factory function for creating a MintDOMElement */
-  (props: Props<Tag>, ...children: MintNode[]): MintDOMElement;
+  (props: Props<Tag>, ...children: MintNode[]): MintElementValue;
   /** Factory function for creating a MintDOMElement */
-  (...children: MintNode[]): MintDOMElement;
+  (...children: MintNode[]): MintElementValue;
 };
 
 type Props<Tag extends keyof HTMLElementPropMap> = HTMLElementPropMap[Tag];
@@ -22,10 +22,10 @@ const f = <Tag extends keyof HTMLElementPropMap>(tag: Tag) => {
       _children = [propsOrChild, ...children];
     }
 
-    return new MintDOMElement({
+    return new MintElementValue("dom", {
       tag,
       props,
-      children: filterNodes(..._children),
+      children: _children,
     });
   };
   return factory;

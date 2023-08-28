@@ -23,3 +23,9 @@ export type MintParentElement =
   | MintProviderElement;
 
 export type CleanupFn = () => void;
+
+export interface MintElementLifecycle {
+  create(): any[];
+  getNodes(): any[];
+  destroy(): void;
+}
