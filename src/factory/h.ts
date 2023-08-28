@@ -1,35 +1,16 @@
 import { MintElementValue } from "../elements";
-import { HTMLElementPropMap, MintNode } from "../types";
-import { isPlainObject } from "../utils";
-
-type Factory<Tag extends keyof HTMLElementPropMap> = {
-  /** Factory function for creating a MintDOMElement */
-  (props: Props<Tag>, ...children: MintNode[]): MintElementValue;
-  /** Factory function for creating a MintDOMElement */
-  (...children: MintNode[]): MintElementValue;
-};
+import { HTMLElementPropMap } from "../types";
 
 type Props<Tag extends keyof HTMLElementPropMap> = HTMLElementPropMap[Tag];
 
-const f = <Tag extends keyof HTMLElementPropMap>(tag: Tag) => {
-  const factory: Factory<Tag> = (propsOrChild: any, ...children: any[]) => {
-    let props = {};
-    let _children = [...children];
-
-    if (isPlainObject(propsOrChild)) {
-      props = propsOrChild;
-    } else {
-      _children = [propsOrChild, ...children];
-    }
-
-    return new MintElementValue("dom", {
+const f =
+  <Tag extends keyof HTMLElementPropMap>(tag: Tag) =>
+  ({ children, ...props }: Props<Tag>) =>
+    new MintElementValue("dom", {
       tag,
       props,
-      children: _children,
+      children: Array.isArray(children) ? children : [children],
     });
-  };
-  return factory;
-};
 
 export const h = {
   div: f("div"),
