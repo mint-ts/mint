@@ -50,7 +50,6 @@ const findNodeAfter = (el: MintElement, nearestDOMAncestor: MintDOMElement) => {
   let index = el.index + 1;
   while (parent) {
     const first = el.tree.getNodes(...parent.children.slice(index))[0];
-    console.log(first);
     if (first) {
       return first;
     }
