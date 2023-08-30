@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { h, show, state } from "../../../factory";
+import { h, show, state } from "../../factory";
 import { DOMRenderer } from "../DOMRenderer";
 
 test("findDOMParent - direct", () => {

@@ -32,7 +32,7 @@ export class MintProviderElement implements MintElementLifecycle {
   }
 
   create() {
-    return [];
+    return this.tree.createFromMultiple(this.children);
   }
 
   destroy() {

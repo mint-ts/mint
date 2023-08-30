@@ -61,7 +61,7 @@ export class MintShowElement implements MintElementLifecycle {
       })
     );
 
-    return this.tree.renderer.show.create({ el: this });
+    return this.tree.createFromMultiple(this.children);
   }
 
   destroy() {

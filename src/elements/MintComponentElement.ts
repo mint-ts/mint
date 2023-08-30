@@ -38,7 +38,7 @@ export class MintComponentElement implements MintElementLifecycle {
     initElementsChildren(this, ...elements);
     this.children = elements;
 
-    return [];
+    return this.tree.createFromMultiple(this.children);
   }
 
   destroy() {

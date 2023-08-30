@@ -3,7 +3,6 @@ import {
   MintElement,
   MintParentElement,
   MintReactiveElement,
-  MintShowElement,
   MintTextElement,
 } from "../elements";
 
@@ -11,7 +10,6 @@ export type MintRenderer<Node, RenderArgs> = {
   dom: HTMLElementRenderer<Node>;
   text: TextElementRenderer<Node>;
   reactive: ReactiveElementRenderer<Node>;
-  show: ShowElementRenderer<Node>;
   insertElements: (parent: MintParentElement, elements: MintElement[]) => void;
   render: (nodes: Node[], container: RenderArgs) => void;
 };
@@ -30,13 +28,6 @@ export type HTMLElementRenderer<Node> = {
     eventListener: any;
   }): void;
   destroy(args: { el: MintDOMElement<Node> }): void;
-};
-
-export type ShowElementRenderer<Node> = {
-  create(args: { el: MintShowElement }): Node[];
-  onShowNodes(args: { el: MintShowElement; nodes: Node[] }): void;
-  onHideNodes(args: { el: MintShowElement; nodes: Node[] }): void;
-  destroy(args: { el: MintShowElement }): void;
 };
 
 export type TextElementRenderer<Node> = {

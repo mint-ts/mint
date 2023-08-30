@@ -42,7 +42,7 @@ export class MintListElement implements MintElementLifecycle {
 
     this.cleanups.add(unsub);
 
-    return [];
+    return this.tree.createFromMultiple(this.children);
   }
 
   destroy() {

@@ -1,10 +1,10 @@
 import { MintTree } from "../../MintTree";
-import { MintDOMElement, MintElement } from "../../elements";
 import { MintRenderer } from "../types";
-import { createShowElementRenderer } from "./createShowElementRenderer";
-import { createHTMLElementRenderer } from "./html";
-import { createReactiveElementRenderer } from "./reactive";
-import { createTextElementRenderer } from "./text";
+import { createHTMLElementRenderer } from "./createHTMLElementRenderer";
+import { createReactiveElementRenderer } from "./createReactiveElementRenderer";
+import { createTextElementRenderer } from "./createTextElementRenderer";
+import { findNearestDOMElementAncestor } from "./findNearestDOMElementAncestor";
+import { findNodeAfter } from "./findNodeAfter";
 import { DOMNode } from "./types";
 
 export const createDOMRenderer = ({
@@ -14,7 +14,6 @@ export const createDOMRenderer = ({
     dom: createHTMLElementRenderer(),
     text: createTextElementRenderer(),
     reactive: createReactiveElementRenderer(),
-    show: createShowElementRenderer(tree),
     insertElements(parent, elements) {
       const nearestDOMAncestor = findNearestDOMElementAncestor(parent);
       if (!nearestDOMAncestor.node) return;
@@ -35,28 +34,6 @@ export const createDOMRenderer = ({
       container.append(...nodes);
     },
   };
-};
-
-const findNearestDOMElementAncestor = (el: MintElement) => {
-  let parent = el.parent;
-  while (parent && parent.type !== "dom") {
-    parent = parent.parent;
-  }
-  return parent as MintDOMElement<HTMLElement>;
-};
-
-const findNodeAfter = (el: MintElement, nearestDOMAncestor: MintDOMElement) => {
-  let parent = el.parent;
-  let index = el.index + 1;
-  while (parent) {
-    const first = el.tree.getNodes(...parent.children.slice(index))[0];
-    if (first) {
-      return first;
-    }
-    if (parent === nearestDOMAncestor) return;
-    index = parent.index + 1;
-    parent = parent.parent;
-  }
 };
 
 export type DOMRendererArgs = {

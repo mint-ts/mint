@@ -107,7 +107,7 @@ export class MintTree {
     return el.create();
   }
 
-  createFromMultiple(elements: MintElement[]) {
+  createFromMultiple(elements: MintElement[]): Node[] {
     return elements.map((el) => el.create()).flat(Infinity);
   }
 
