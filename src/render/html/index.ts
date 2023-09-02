@@ -1,2 +1,2 @@
-export * from "./renderHTML";
+export * from "./renderToHTML";
 export * from "./types";

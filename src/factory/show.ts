@@ -1,11 +1,21 @@
-import { MintShowElement } from "../elements";
+import { MintElementValue, MintShowElement } from "../elements";
 import { MintNode, Reactive } from "../types";
-import { filterNodes } from "../utils";
 
 /**
  * Used for conditional rendering of nodes
  * @returns MintShowElement
  * */
-export const show = (when: Reactive, yes: MintNode, no?: MintNode) => {
-  return new MintShowElement(when, filterNodes(yes), filterNodes(no));
+export const show = (
+  when: Reactive,
+  yes: MintNode,
+  no?: MintNode
+): MintElementValue => {
+  return new MintElementValue((renderer) => {
+    return new MintShowElement(
+      when,
+      renderer.nodesToElements(yes),
+      renderer.nodesToElements(no),
+      renderer
+    );
+  });
 };

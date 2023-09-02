@@ -1,4 +1,4 @@
-import { MintElement } from "../elements";
+import { MintElementValue } from "../elements";
 import { Reactive } from "./reactive";
 
 /** Nodes which are ignored ( not rendered ) */
@@ -11,5 +11,5 @@ export type MintNode =
   | MintEmptyNode
   | MintTextNode
   | Reactive
-  | MintElement
+  | MintElementValue
   | MintNode[];

@@ -1,3 +1,4 @@
+export * from "./MintTree";
 export * from "./context";
 export * from "./elements";
 export * from "./factory";

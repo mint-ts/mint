@@ -1,4 +1,4 @@
-import { MintListElement } from "../elements";
+import { MintElementValue, MintListElement } from "../elements";
 import { MintNode, Reactive } from "../types";
 
 /**
@@ -8,6 +8,8 @@ import { MintNode, Reactive } from "../types";
 export const map = <Item>(
   reactiveArray: Reactive<Item[]>,
   render: (item: Item) => MintNode
-) => {
-  return new MintListElement(reactiveArray, render);
+): MintElementValue => {
+  return new MintElementValue(
+    (renderer) => new MintListElement(reactiveArray, render, renderer)
+  );
 };
