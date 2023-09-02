@@ -1,4 +1,5 @@
 export * from "./MintComponentElement";
+export * from "./MintElementValue";
 export * from "./MintHTMLElement";
 export * from "./MintListElement";
 export * from "./MintProviderElement";

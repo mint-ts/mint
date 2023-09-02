@@ -9,9 +9,7 @@ export const map = <Item>(
   reactiveArray: Reactive<Item[]>,
   render: (item: Item) => MintNode
 ): MintElementValue => {
-  return {
-    toMintElement(renderer) {
-      return new MintListElement(reactiveArray, render, renderer);
-    },
-  };
+  return new MintElementValue(
+    (renderer) => new MintListElement(reactiveArray, render, renderer)
+  );
 };

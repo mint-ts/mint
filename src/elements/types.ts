@@ -31,7 +31,3 @@ export interface MintElementContract<Node = any> {
   onInsertion(): void;
   destroy(): void;
 }
-
-export type MintElementValue<Node = any> = {
-  toMintElement: (renderer: MintRenderer<Node>) => MintElement;
-};

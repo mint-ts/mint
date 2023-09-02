@@ -20,25 +20,20 @@ const f = <Tag extends keyof HTMLElementPropMap>(tag: Tag) => {
     let props = {};
     let _children = [...children];
 
-    if (
-      isPlainObject(propsOrChild) &&
-      !propsOrChild.hasOwnProperty("toMintElement")
-    ) {
+    if (isPlainObject(propsOrChild)) {
       props = propsOrChild;
     } else {
       _children = [propsOrChild, ...children];
     }
 
-    return {
-      toMintElement(renderer) {
-        return new MintHTMLElement(
-          tag,
-          props,
-          renderer.nodesToElements(_children),
-          renderer as MintRenderer<any> & HTMLElementRenderer<any>
-        );
-      },
-    };
+    return new MintElementValue((renderer) => {
+      return new MintHTMLElement(
+        tag,
+        props,
+        renderer.nodesToElements(_children),
+        renderer as MintRenderer<any> & HTMLElementRenderer<any>
+      );
+    });
   };
   return factory;
 };

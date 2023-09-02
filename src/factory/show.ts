@@ -10,14 +10,12 @@ export const show = (
   yes: MintNode,
   no?: MintNode
 ): MintElementValue => {
-  return {
-    toMintElement(renderer) {
-      return new MintShowElement(
-        when,
-        renderer.nodesToElements(yes),
-        renderer.nodesToElements(no),
-        renderer
-      );
-    },
-  };
+  return new MintElementValue((renderer) => {
+    return new MintShowElement(
+      when,
+      renderer.nodesToElements(yes),
+      renderer.nodesToElements(no),
+      renderer
+    );
+  });
 };
