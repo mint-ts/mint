@@ -1,11 +1,10 @@
-import { MintTree } from "../MintTree";
-import { TextElementHTMLNode } from "../render";
-import { CleanupFn, MintElementLifecycle, MintParentElement } from "./types";
+import { MintRenderer, TextElementHTMLNode } from "../render";
+import { CleanupFn, MintElementContract, MintParentElement } from "./types";
 
-export class MintTextElement<Node = any> implements MintElementLifecycle {
-  constructor({ text, tree }: MintTextElementArgs) {
+export class MintTextElement<Node = any> implements MintElementContract<Node> {
+  constructor(text: string, renderer: MintRenderer<Node>) {
     this.text = text;
-    this.tree = tree;
+    this.renderer = renderer;
   }
   type = "text" as const;
   text;
@@ -15,23 +14,22 @@ export class MintTextElement<Node = any> implements MintElementLifecycle {
   htmlNode: TextElementHTMLNode | undefined;
   isInserted = false;
   cleanups = new Set<CleanupFn>();
-  tree;
+  renderer;
 
   getNodes() {
     return this.node ? [this.node] : [];
   }
 
   create() {
-    this.node = this.tree.renderer.text.create({ el: this })[0];
-    return [this.node];
+    const result = this.renderer.createTextElement(this)[0];
+    this.node = result;
+    return [result];
   }
+
+  onInsertion(): void {}
 
   destroy() {
-    this.tree.renderer.text.destroy({ el: this });
+    this.renderer.destroyTextElement(this);
+    this.node = undefined;
   }
 }
-
-export type MintTextElementArgs = {
-  text: string;
-  tree: MintTree;
-};

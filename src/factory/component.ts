@@ -1,4 +1,4 @@
-import { MintElementValue } from "../elements";
+import { MintComponentElement, MintElementValue } from "../elements";
 import { MintNode } from "../types";
 
 /**
@@ -7,9 +7,10 @@ import { MintNode } from "../types";
  */
 export const component =
   <Props = void>(render: (props: Props) => MintNode) =>
-  (props: Props) => {
-    return new MintElementValue("component", {
-      render,
-      props: (props ?? {}) as object,
-    });
+  (props: Props): MintElementValue => {
+    return {
+      toMintElement(renderer) {
+        return new MintComponentElement(render, props ?? {}, renderer);
+      },
+    };
   };

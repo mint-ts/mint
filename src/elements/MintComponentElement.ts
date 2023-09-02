@@ -1,24 +1,30 @@
-import { MintTree } from "../MintTree";
 import { currentComponent } from "../currentComponent";
+import { MintRenderer } from "../render";
 import { MintNode } from "../types";
 import { initElementsChildren } from "../utils";
 import {
   CleanupFn,
   MintElement,
-  MintElementLifecycle,
+  MintElementContract,
   MintParentElement,
 } from "./types";
 
-export class MintComponentElement implements MintElementLifecycle {
-  constructor({ render, props, tree }: MintComponentElementArgs) {
+export class MintComponentElement<Node = any>
+  implements MintElementContract<Node>
+{
+  constructor(
+    render: (props: any) => MintNode,
+    props: object,
+    renderer: MintRenderer<Node>
+  ) {
     this.render = render;
     this.props = props;
-    this.tree = tree;
+    this.renderer = renderer;
   }
   type = "component" as const;
   render;
   props;
-  tree;
+  renderer;
   children: MintElement[] = [];
   index = 0;
   parent: MintParentElement | undefined;
@@ -27,19 +33,21 @@ export class MintComponentElement implements MintElementLifecycle {
   onMounts = new Set<OnMountCallback>();
   onDestroys = new Set<OnDestroyCallback>();
 
-  getNodes() {
-    return this.tree.getNodes(...this.children);
+  getNodes(): Node[] {
+    return this.renderer.getNodes(...this.children);
   }
 
-  create() {
+  create(): Node[] {
     currentComponent.current = this;
-    const elements = this.tree.nodesToElements(this.render(this.props));
+    const elements = this.renderer.nodesToElements(this.render(this.props));
     currentComponent.current = undefined;
     initElementsChildren(this, ...elements);
     this.children = elements;
 
-    return this.tree.createFromMultiple(this.children);
+    return this.renderer.createFromMultiple(this.children);
   }
+
+  onInsertion(): void {}
 
   destroy() {
     this.onMounts.clear();
@@ -50,9 +58,3 @@ export class MintComponentElement implements MintElementLifecycle {
 
 type OnMountCallback = () => void;
 type OnDestroyCallback = () => void;
-
-export type MintComponentElementArgs = {
-  render: (props: any) => MintNode;
-  props: object;
-  tree: MintTree;
-};

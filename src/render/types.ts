@@ -1,42 +1,37 @@
 import {
-  MintDOMElement,
+  MintComponentElement,
   MintElement,
-  MintParentElement,
+  MintHTMLElement,
   MintReactiveElement,
   MintTextElement,
 } from "../elements";
+import { MintNode } from "../types";
 
-export type MintRenderer<Node, RenderArgs> = {
-  dom: HTMLElementRenderer<Node>;
-  text: TextElementRenderer<Node>;
-  reactive: ReactiveElementRenderer<Node>;
-  insertElements: (parent: MintParentElement, elements: MintElement[]) => void;
-  render: (nodes: Node[], container: RenderArgs) => void;
-};
+export interface MintRenderer<Node> {
+  getNodes(...elements: MintElement<Node>[]): Node[];
+  createFromMultiple(elements: MintElement<Node>[]): Node[];
+  onInsertion(elements: MintElement<Node>[]): void;
+  destroyMultiple(elements: MintElement<Node>[]): void;
+  createTextElement(el: MintTextElement): Node[];
+  destroyTextElement(el: MintTextElement): void;
+  createReactiveElement(el: MintReactiveElement<Node>): Node[];
+  updateReactiveElement(el: MintReactiveElement<Node>): void;
+  destroyReactiveElement(el: MintReactiveElement<Node>): void;
+  nodesToElements(...nodes: MintNode[]): MintElement<Node>[];
+  insertElements(
+    parent: MintElement<Node>,
+    children: MintElement<Node>[]
+  ): void;
+  currentComponent: MintComponentElement | undefined;
+}
 
-export type HTMLElementRenderer<Node> = {
-  create(args: { el: MintDOMElement<Node> }): Node[];
-  handleChildNodes(args: { el: MintDOMElement<Node>; nodes: Node[] }): void;
-  setProp(args: {
-    el: MintDOMElement<Node>;
-    propKey: string;
-    propValue: any;
-  }): void;
-  setEventListener(args: {
-    el: MintDOMElement<Node>;
-    eventType: string;
-    eventListener: any;
-  }): void;
-  destroy(args: { el: MintDOMElement<Node> }): void;
-};
-
-export type TextElementRenderer<Node> = {
-  create(args: { el: MintTextElement<Node> }): Node[];
-  destroy(args: { el: MintTextElement<Node> }): void;
-};
-
-export type ReactiveElementRenderer<Node> = {
-  create(args: { el: MintReactiveElement<Node> }): Node[];
-  update(args: { el: MintReactiveElement<Node>; newValue: any }): void;
-  destroy(args: { el: MintReactiveElement<Node> }): void;
-};
+export interface HTMLElementRenderer<Node> {
+  createHTMLElement(el: MintHTMLElement<Node>): Node[];
+  setHTMLElementProp(
+    el: MintHTMLElement<Node>,
+    propKey: string,
+    propValue: any
+  ): void;
+  addHTMLElementChildren(el: MintHTMLElement<Node>, nodes: Node[]): void;
+  destroyHTMLElement(el: MintHTMLElement<Node>): void;
+}

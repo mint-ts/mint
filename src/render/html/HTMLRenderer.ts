@@ -1,5 +1,5 @@
 import {
-  MintDOMElement,
+  MintHTMLElement,
   MintElement,
   MintListElement,
   MintShowElement,
@@ -38,7 +38,7 @@ export class HTMLRenderer implements MintRenderer<HTMLNode> {
     throw new Error("Method not implemented.");
   }
   updateHTMLElementProp?(args: {
-    el: MintDOMElement<any>;
+    el: MintHTMLElement<any>;
     propKey: string;
     propValue: any;
   }): void {

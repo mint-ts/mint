@@ -1,4 +1,4 @@
-import { MintDOMElement } from "../../elements";
+import { MintHTMLElement } from "../../elements";
 import { isEventProp } from "../../utils";
 import { HTMLRenderer } from "./HTMLRenderer";
 import { DOMElementHTMLNode } from "./types";
@@ -9,7 +9,7 @@ export class DOMElementHTMLRenderer {
   }
   renderer;
 
-  toHTMLNodes(el: MintDOMElement) {
+  toHTMLNodes(el: MintHTMLElement) {
     let props: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(el.props)) {

@@ -1,36 +1,40 @@
 import { getPatch } from "fast-array-diff";
-import { MintTree } from "../MintTree";
+import { MintRenderer } from "../render";
 import { MintNode, Reactive } from "../types";
 import { initElementsChildren } from "../utils";
 import {
   CleanupFn,
   MintElement,
-  MintElementLifecycle,
+  MintElementContract,
   MintParentElement,
 } from "./types";
 
-export class MintListElement implements MintElementLifecycle {
-  constructor({ array, render, tree }: MintListElementArgs) {
+export class MintListElement<Node = any> implements MintElementContract<Node> {
+  constructor(
+    array: Reactive<any[]>,
+    render: (item: any) => MintNode,
+    renderer: MintRenderer<Node>
+  ) {
     this.array = array;
     this.render = render;
-    this.tree = tree;
+    this.renderer = renderer;
   }
   type = "list" as const;
   array;
   render;
-  tree;
+  renderer;
   children: MintElement[] = [];
   index = 0;
   parent: MintParentElement | undefined;
   isInserted = false;
   cleanups = new Set<CleanupFn>();
 
-  getNodes() {
-    return this.tree.getNodes(...this.children);
+  getNodes(): Node[] {
+    return this.renderer.getNodes(...this.children);
   }
 
   create() {
-    const elements = this.tree.nodesToElements(
+    const elements = this.renderer.nodesToElements(
       ...this.array.value.map(this.render)
     );
     initElementsChildren(this, ...elements);
@@ -42,8 +46,10 @@ export class MintListElement implements MintElementLifecycle {
 
     this.cleanups.add(unsub);
 
-    return this.tree.createFromMultiple(this.children);
+    return this.renderer.createFromMultiple(this.children);
   }
+
+  onInsertion(): void {}
 
   destroy() {
     this.children.forEach((c) => c.destroy());
@@ -57,7 +63,7 @@ export class MintListElement implements MintElementLifecycle {
       switch (patchItem.type) {
         case "add": {
           const nodes = patchItem.items.map((item) => this.render(item));
-          const elements = this.tree.nodesToElements(...nodes);
+          const elements = this.renderer.nodesToElements(...nodes);
           this.children = [
             ...this.children.slice(0, patchItem.newPos),
             ...elements,
@@ -93,9 +99,3 @@ export class MintListElement implements MintElementLifecycle {
     }
   }
 }
-
-export type MintListElementArgs = {
-  array: Reactive<any[]>;
-  render: (item: any) => MintNode;
-  tree: MintTree;
-};

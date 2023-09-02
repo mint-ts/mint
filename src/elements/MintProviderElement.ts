@@ -1,19 +1,26 @@
-import { MintTree } from "../MintTree";
 import { Context } from "../context";
+import { MintRenderer } from "../render";
 import { initElementsChildren } from "../utils";
 import {
   CleanupFn,
   MintElement,
-  MintElementLifecycle,
+  MintElementContract,
   MintParentElement,
 } from "./types";
 
-export class MintProviderElement implements MintElementLifecycle {
-  constructor({ value, children, context, tree }: MintProviderElementArgs) {
+export class MintProviderElement<Node = any>
+  implements MintElementContract<Node>
+{
+  constructor(
+    value: any,
+    children: MintElement[],
+    context: Context,
+    renderer: MintRenderer<Node>
+  ) {
     this.value = value;
     this.children = children;
     this.context = context;
-    this.tree = tree;
+    this.renderer = renderer;
 
     initElementsChildren(this, ...this.children);
   }
@@ -21,28 +28,23 @@ export class MintProviderElement implements MintElementLifecycle {
   value;
   children;
   context;
-  tree;
+  renderer;
   index = 0;
   parent: MintParentElement | undefined;
   isInserted = false;
   cleanups = new Set<CleanupFn>();
 
   getNodes() {
-    return this.tree.getNodes(...this.children);
+    return this.renderer.getNodes(...this.children);
   }
 
   create() {
-    return this.tree.createFromMultiple(this.children);
+    return this.renderer.createFromMultiple(this.children);
   }
+
+  onInsertion(): void {}
 
   destroy() {
     this.children.forEach((c) => c.destroy());
   }
 }
-
-export type MintProviderElementArgs = {
-  value: any;
-  children: MintElement[];
-  context: Context;
-  tree: MintTree;
-};

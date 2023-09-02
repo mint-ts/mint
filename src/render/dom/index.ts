@@ -1,1 +1,2 @@
-export * from "./createDOMRenderer";
+export * from "./DOMRenderer";
+export * from "./render";

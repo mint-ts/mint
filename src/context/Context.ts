@@ -1,14 +1,20 @@
-import { MintElementValue } from "../elements";
+import { MintElementValue, MintProviderElement } from "../elements";
 import { MintNode } from "../types";
 
 export class Context<Value = any> {
   /** Returns a MintProviderElement */
-  provider(props: { value: Value }, ...children: MintNode[]) {
-    return new MintElementValue("provider", {
-      value: props.value,
-      children,
-      context: this,
-    });
+  provider(props: { value: Value }, ...children: MintNode[]): MintElementValue {
+    const inst = this;
+    return {
+      toMintElement(renderer) {
+        return new MintProviderElement(
+          props.value,
+          renderer.nodesToElements(children),
+          inst,
+          renderer
+        );
+      },
+    };
   }
 }
 

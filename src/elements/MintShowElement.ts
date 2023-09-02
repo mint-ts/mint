@@ -1,27 +1,31 @@
-import { MintTree } from "../MintTree";
-import { ShowElementHTMLNode } from "../render";
+import { MintRenderer, ShowElementHTMLNode } from "../render";
 import { Reactive } from "../types";
 import { initElementsChildren } from "../utils";
 import {
   CleanupFn,
   MintElement,
-  MintElementLifecycle,
+  MintElementContract,
   MintParentElement,
 } from "./types";
 
-export class MintShowElement implements MintElementLifecycle {
-  constructor({ when, yes, no, tree }: MintShowElementArgs) {
+export class MintShowElement<Node = any> implements MintElementContract<Node> {
+  constructor(
+    when: Reactive,
+    yes: MintElement[],
+    no: MintElement[],
+    renderer: MintRenderer<Node>
+  ) {
     this.when = when;
     this.yes = yes;
     this.no = no;
-    this.tree = tree;
+    this.renderer = renderer;
   }
 
   type = "show" as const;
   when;
   yes;
   no;
-  tree;
+  renderer;
   index = 0;
   parent: MintParentElement | undefined;
   isInserted = false;
@@ -44,8 +48,8 @@ export class MintShowElement implements MintElementLifecycle {
     return this.condition ? this.no : this.yes;
   }
 
-  getNodes() {
-    return this.tree.getNodes(...this.children);
+  getNodes(): Node[] {
+    return this.renderer.getNodes(...this.children);
   }
 
   create() {
@@ -54,25 +58,20 @@ export class MintShowElement implements MintElementLifecycle {
     this.cleanups.add(
       this.when.subscribe(() => {
         if (this.condition === this.prevCondition) return;
-        this.tree.destroyMultiple(this.notShownChildren);
+        this.renderer.destroyMultiple(this.notShownChildren);
         initElementsChildren(this, ...this.children);
-        this.tree.createFromMultiple(this.children);
-        this.tree.renderer.insertElements(this, this.children);
+        this.renderer.createFromMultiple(this.children);
+        this.renderer.insertElements(this, this.children);
       })
     );
 
-    return this.tree.createFromMultiple(this.children);
+    return this.renderer.createFromMultiple(this.children);
   }
+
+  onInsertion(): void {}
 
   destroy() {
     this.children.forEach((c) => c.destroy());
     this.cleanups.forEach((c) => c());
   }
 }
-
-export type MintShowElementArgs = {
-  when: Reactive;
-  yes: MintElement[];
-  no: MintElement[];
-  tree: MintTree;
-};

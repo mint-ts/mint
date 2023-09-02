@@ -1,16 +1,17 @@
-import { MintTree } from "../MintTree";
-import { TextElementHTMLNode } from "../render";
+import { MintRenderer, TextElementHTMLNode } from "../render";
 import { Reactive } from "../types";
-import { CleanupFn, MintElementLifecycle, MintParentElement } from "./types";
+import { CleanupFn, MintElementContract, MintParentElement } from "./types";
 
-export class MintReactiveElement<Node = any> implements MintElementLifecycle {
-  constructor({ reactive, tree }: MintReactiveElementArgs) {
+export class MintReactiveElement<Node = any>
+  implements MintElementContract<Node>
+{
+  constructor(reactive: Reactive, renderer: MintRenderer<Node>) {
     this.reactive = reactive;
-    this.tree = tree;
+    this.renderer = renderer;
   }
   type = "reactive" as const;
   reactive;
-  tree;
+  renderer;
   index = 0;
   parent: MintParentElement | undefined;
   isInserted = false;
@@ -23,27 +24,23 @@ export class MintReactiveElement<Node = any> implements MintElementLifecycle {
   }
 
   create() {
-    this.node = this.tree.renderer.reactive.create({ el: this })[0];
+    const result = this.renderer.createReactiveElement(this)[0];
+    this.node = result;
 
     this.cleanups.add(
       this.reactive.subscribe(() => {
-        this.tree.renderer.reactive.update({
-          el: this,
-          newValue: this.reactive.value,
-        });
+        this.renderer.updateReactiveElement(this);
       })
     );
 
-    return [this.node];
+    return [result];
   }
+
+  onInsertion(): void {}
 
   destroy() {
     this.cleanups.forEach((c) => c());
-    this.tree.renderer.reactive.destroy({ el: this });
+    this.renderer.destroyReactiveElement(this);
+    this.node = undefined;
   }
 }
-
-export type MintReactiveElementArgs = {
-  reactive: Reactive;
-  tree: MintTree;
-};
