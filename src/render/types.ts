@@ -12,9 +12,9 @@ export interface MintRenderer<Node> {
   createFromMultiple(elements: MintElement<Node>[]): Node[];
   onInsertion(elements: MintElement<Node>[]): void;
   destroyMultiple(elements: MintElement<Node>[]): void;
-  createTextElement(el: MintTextElement): Node[];
+  createTextElement(el: MintTextElement): Node;
   destroyTextElement(el: MintTextElement): void;
-  createReactiveElement(el: MintReactiveElement<Node>): Node[];
+  createReactiveElement(el: MintReactiveElement<Node>): Node;
   updateReactiveElement(el: MintReactiveElement<Node>): void;
   destroyReactiveElement(el: MintReactiveElement<Node>): void;
   nodesToElements(...nodes: MintNode[]): MintElement<Node>[];
@@ -26,7 +26,7 @@ export interface MintRenderer<Node> {
 }
 
 export interface HTMLElementRenderer<Node> {
-  createHTMLElement(el: MintHTMLElement<Node>): Node[];
+  createHTMLElement(el: MintHTMLElement<Node>): Node;
   setHTMLElementProp(
     el: MintHTMLElement<Node>,
     propKey: string,

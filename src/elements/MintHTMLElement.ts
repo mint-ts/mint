@@ -36,7 +36,7 @@ export class MintHTMLElement<Node = any> implements MintElementContract<Node> {
 
   create() {
     initElementsChildren(this, ...this.children);
-    const result = this.renderer.createHTMLElement(this)[0];
+    const result = this.renderer.createHTMLElement(this);
     this.node = result;
     this.renderer.addHTMLElementChildren(
       this,

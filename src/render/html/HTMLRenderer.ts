@@ -1,108 +1,170 @@
 import {
-  MintHTMLElement,
+  MintComponentElement,
   MintElement,
-  MintListElement,
-  MintShowElement,
+  MintElementValue,
+  MintHTMLElement,
+  MintReactiveElement,
+  MintTextElement,
 } from "../../elements";
-import { MintRenderer } from "../types";
-import { DOMElementHTMLRenderer } from "./DOMElementHTMLRenderer";
-import { ListElementHTMLRenderer } from "./ListElementHTMLRenderer";
-import { ShowElementHTMLRenderer } from "./ShowElementHTMLRenderer";
-import { HTMLNode, TextElementHTMLNode } from "./types";
+import { MintNode } from "../../types";
+import { isEmptyNode, isEventProp, isReactive, isTextNode } from "../../utils";
+import { HTMLElementRenderer, MintRenderer } from "../types";
+import { DOMElementHTMLNode, HTMLNode, TextElementHTMLNode } from "./types";
 
-export class HTMLRenderer implements MintRenderer<HTMLNode> {
-  create(el: MintElement): HTMLNode[] {
-    throw new Error("Method not implemented.");
-  }
-  onShowElements(args: { el: MintShowElement; elements: MintElement[] }): void {
-    throw new Error("Method not implemented.");
-  }
-  onRemoveElements(args: {
-    el: MintShowElement;
-    elements: MintElement[];
-  }): void {
-    throw new Error("Method not implemented.");
-  }
-  onListAddElements(args: {
-    el: MintListElement;
-    newElements: MintElement[];
-    index: number;
-  }): void {
-    throw new Error("Method not implemented.");
-  }
-  onListRemoveElements(args: {
-    el: MintListElement;
-    removedElements: MintElement[];
-    index: number;
-  }): void {
-    throw new Error("Method not implemented.");
-  }
-  updateHTMLElementProp?(args: {
-    el: MintHTMLElement<any>;
-    propKey: string;
-    propValue: any;
-  }): void {
-    throw new Error("Method not implemented.");
-  }
-  destroy(el: MintElement): void {
-    throw new Error("Method not implemented.");
+export class HTMLRenderer
+  implements MintRenderer<HTMLNode>, HTMLElementRenderer<HTMLNode>
+{
+  currentComponent: MintComponentElement<any> | undefined;
+
+  createHTMLElement(el: MintHTMLElement<HTMLNode>): HTMLNode {
+    let props: Record<string, string> = {};
+
+    const node: DOMElementHTMLNode = {
+      type: "dom",
+      tag: el.tag,
+      props,
+      children: this.createFromMultiple(el.children),
+    };
+
+    return node;
   }
 
-  toHTMLNodes(el: MintElement): HTMLNode[] {
-    switch (el.type) {
-      case "dom": {
-        return new DOMElementHTMLRenderer(this).toHTMLNodes(el);
-      }
-      case "component": {
-        el.create();
-        return this.toHTMLNodesFromMultiple(...el.children);
-      }
-      case "provider": {
-        return this.toHTMLNodesFromMultiple(...el.children);
-      }
-      case "show": {
-        return new ShowElementHTMLRenderer(this).toHTML(el);
-      }
-      case "list": {
-        return new ListElementHTMLRenderer(this).toHTML(el);
-      }
-      case "text": {
-        const node: TextElementHTMLNode = {
-          type: "text",
-          text: el.text,
-        };
-        el.htmlNode = node;
-        return [node];
-      }
-      case "reactive": {
-        const node: TextElementHTMLNode = {
-          type: "text",
-          text: el.reactive.value,
-        };
-        el.htmlNode = node;
-        const unsub = el.reactive.subscribe(() => {
-          if (el.htmlNode) {
-            el.htmlNode.text = el.reactive.value;
-          }
-        });
-        el.cleanups.add(unsub);
-        return [node];
-      }
-      default:
-        return [];
+  getStyleStringFromStyleObject(styleObj: any) {
+    return Object.entries(styleObj)
+      .map(([key, value]) => {
+        let v = value;
+
+        if (typeof v === "number") {
+          v = `${v}px`;
+        }
+
+        return `${key.replace(
+          /[A-Z]/g,
+          (match) => `-${match.toLowerCase()}`
+        )}:${v}`;
+      })
+      .join(";");
+  }
+
+  setHTMLElementProp(
+    el: MintHTMLElement<DOMElementHTMLNode>,
+    propKey: string,
+    propValue: any
+  ): void {
+    if (!el.node || isEventProp(propKey)) return;
+    if (propKey === "style") {
+      el.node.props.style = this.getStyleStringFromStyleObject(propValue);
+    }
+    //
+    else {
+      el.node.props[propKey] = String(propValue);
     }
   }
 
-  toHTMLNodesFromMultiple(...els: MintElement[]) {
-    return els
-      .map((child) => this.toHTMLNodes(child))
-      .flat(Infinity) as HTMLNode[];
+  addHTMLElementChildren(): void {}
+
+  destroyHTMLElement(el: MintHTMLElement<HTMLNode>): void {}
+
+  getNodes(...elements: MintElement<HTMLNode>[]): HTMLNode[] {
+    return elements.map((el) => el.getNodes()).flat(Infinity) as HTMLNode[];
+  }
+
+  createFromMultiple(elements: MintElement<HTMLNode>[]): HTMLNode[] {
+    return elements.map((el) => el.create()).flat(Infinity) as HTMLNode[];
+  }
+
+  onInsertion(elements: MintElement<HTMLNode>[]): void {}
+
+  destroyMultiple(elements: MintElement<HTMLNode>[]): void {
+    elements.forEach((el) => el.destroy());
+  }
+
+  createTextElement(el: MintTextElement<any>): HTMLNode {
+    const node: TextElementHTMLNode = {
+      type: "text",
+      text: el.text,
+    };
+    el.htmlNode = node;
+    return node;
+  }
+
+  destroyTextElement(el: MintTextElement<any>): void {}
+
+  createReactiveElement(el: MintReactiveElement<HTMLNode>): HTMLNode {
+    const node: TextElementHTMLNode = {
+      type: "text",
+      text: el.reactive.value,
+    };
+    el.node = node;
+    return node;
+  }
+
+  updateReactiveElement(el: MintReactiveElement<TextElementHTMLNode>): void {
+    if (el.node) {
+      el.node.text = el.reactive.value;
+    }
+  }
+
+  destroyReactiveElement(el: MintReactiveElement<TextElementHTMLNode>): void {}
+
+  nodesToElements(...nodes: MintNode[]): MintElement<HTMLNode>[] {
+    const elements: MintElement<HTMLNode>[] = [];
+
+    for (const node of nodes.flat(Infinity as 1)) {
+      if (isEmptyNode(node)) continue;
+      if (isTextNode(node)) {
+        elements.push(new MintTextElement(String(node), this));
+        continue;
+      }
+      if (isReactive(node)) {
+        elements.push(new MintReactiveElement(node, this));
+        continue;
+      }
+      if (node instanceof MintElementValue) {
+        elements.push(node.toMintElement(this));
+      }
+    }
+
+    return elements;
+  }
+
+  insertElements(
+    parent: MintElement<HTMLNode>,
+    children: MintElement<HTMLNode>[]
+  ): void {
+    console.log(parent, children);
+  }
+
+  htmlElementNodeToString(node: DOMElementHTMLNode) {
+    let s = `<${node.tag}`;
+
+    const props: string[] = [];
+    for (const [key, value] of Object.entries(node.props)) {
+      const keyAlias = ATTRIBUTE_ALIASES[key];
+
+      props.push(`${keyAlias ?? key}="${value}"`);
+    }
+
+    if (props.length > 0) {
+      s += ` ${props.join(" ")}`;
+    }
+
+    if (node.children.length > 0) {
+      const childrenString = this.htmlNodesToString(...node.children);
+      s += `>${childrenString}</${node.tag}>`;
+    }
+    //
+    else {
+      s += "/>";
+    }
+
+    return s;
   }
 
   htmlNodeToString(node: HTMLNode): string {
     switch (node.type) {
       case "dom": {
-        return new DOMElementHTMLRenderer(this).htmlNodeToString(node);
+        return this.htmlElementNodeToString(node);
       }
       case "show": {
         return this.htmlNodesToString(...node.children);
@@ -110,6 +172,8 @@ export class HTMLRenderer implements MintRenderer<HTMLNode> {
       case "text": {
         return node.text;
       }
+      default:
+        return "";
     }
   }
 
@@ -117,9 +181,16 @@ export class HTMLRenderer implements MintRenderer<HTMLNode> {
     return nodes.map((n) => this.htmlNodeToString(n)).join("");
   }
 
-  render(elements: MintElement[]) {
-    const nodes = this.toHTMLNodesFromMultiple(...elements);
+  render(node: MintNode): string {
+    const elements = this.nodesToElements(node);
+
+    const nodes = this.createFromMultiple(elements);
 
     return this.htmlNodesToString(...nodes);
   }
 }
+
+const ATTRIBUTE_ALIASES: Record<string, string> = {
+  className: "class",
+  htmlFor: "for",
+};

@@ -73,22 +73,17 @@ export class MintListElement<Node = any> implements MintElementContract<Node> {
             child.parent = this;
             child.index = patchItem.newPos + i;
           });
-          // this.tree.renderer.onListAddElements({
-          //   el: this,
-          //   newElements: elements,
-          //   index: patchItem.newPos,
-          // });
+          this.renderer.createFromMultiple(elements);
+          this.renderer.insertElements(this, elements);
           break;
         }
         case "remove": {
-          // this.tree.renderer.onListRemoveElements({
-          //   el: this,
-          //   removedElements: this.children.slice(
-          //     patchItem.newPos,
-          //     patchItem.newPos + patchItem.items.length
-          //   ),
-          //   index: patchItem.newPos,
-          // });
+          this.renderer.destroyMultiple(
+            this.children.slice(
+              patchItem.newPos,
+              patchItem.newPos + patchItem.items.length
+            )
+          );
           this.children = [
             ...this.children.slice(0, patchItem.newPos),
             ...this.children.slice(patchItem.newPos + patchItem.items.length),

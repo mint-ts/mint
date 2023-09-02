@@ -21,7 +21,7 @@ export class MintTextElement<Node = any> implements MintElementContract<Node> {
   }
 
   create() {
-    const result = this.renderer.createTextElement(this)[0];
+    const result = this.renderer.createTextElement(this);
     this.node = result;
     return [result];
   }

@@ -24,7 +24,7 @@ export class MintReactiveElement<Node = any>
   }
 
   create() {
-    const result = this.renderer.createReactiveElement(this)[0];
+    const result = this.renderer.createReactiveElement(this);
     this.node = result;
 
     this.cleanups.add(

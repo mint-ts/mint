@@ -1,6 +1,7 @@
 import {
   MintComponentElement,
   MintElement,
+  MintElementValue,
   MintHTMLElement,
   MintReactiveElement,
   MintTextElement,
@@ -37,9 +38,8 @@ export class DOMRenderer
     elements.forEach((el) => el.destroy());
   }
 
-  createHTMLElement(el: MintHTMLElement): HTMLElement[] {
-    const dom = document.createElement(el.tag);
-    return [dom];
+  createHTMLElement(el: MintHTMLElement): HTMLElement {
+    return document.createElement(el.tag);
   }
 
   setHTMLElementProp(
@@ -54,7 +54,8 @@ export class DOMRenderer
         propValue
       );
     }
-    if (propKey === "style") {
+    //
+    else if (propKey === "style") {
       this.setStyleProp(el.node, propValue);
     }
     //
@@ -85,8 +86,8 @@ export class DOMRenderer
     }
   }
 
-  createReactiveElement(el: MintReactiveElement<DOMNode>): DOMNode[] {
-    return [new Text(String(el.reactive.value))];
+  createReactiveElement(el: MintReactiveElement<DOMNode>): DOMNode {
+    return new Text(String(el.reactive.value));
   }
   updateReactiveElement(el: MintReactiveElement<DOMNode>): void {
     if (!el.node) return;
@@ -98,8 +99,8 @@ export class DOMRenderer
     }
   }
 
-  createTextElement(el: MintTextElement<Text>): Text[] {
-    return [new Text(el.text)];
+  createTextElement(el: MintTextElement<Text>): Text {
+    return new Text(el.text);
   }
   destroyTextElement(el: MintTextElement<Text>): void {
     if (el.node) {
@@ -162,7 +163,7 @@ export class DOMRenderer
         elements.push(new MintReactiveElement(node, this));
         continue;
       }
-      if (typeof node === "object" && node.hasOwnProperty("toMintElement")) {
+      if (node instanceof MintElementValue) {
         elements.push(node.toMintElement(this));
       }
     }
