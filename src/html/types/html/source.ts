@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLSourceElementAttributes = {
   height?: number | string | undefined;
@@ -10,5 +10,5 @@ export type HTMLSourceElementAttributes = {
   width?: number | string | undefined;
 };
 
-export type HTMLSourceElementProps = MintHTMLAttributes<HTMLSourceElement> &
+export type HTMLSourceElementProps = MintHTMLElementProps<HTMLSourceElement> &
   HTMLSourceElementAttributes;

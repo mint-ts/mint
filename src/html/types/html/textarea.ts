@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLTextAreaAttributes = {
   autoComplete?: string | undefined;
@@ -17,5 +17,5 @@ export type HTMLTextAreaAttributes = {
   wrap?: string | undefined;
 };
 
-export type HTMLTextAreaProps = MintHTMLAttributes<HTMLTextAreaElement> &
+export type HTMLTextAreaProps = MintHTMLElementProps<HTMLTextAreaElement> &
   HTMLTextAreaAttributes;

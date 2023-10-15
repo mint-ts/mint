@@ -1,8 +1,8 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLQuoteElementAttributes = {
   cite?: string | undefined;
 };
 
-export type HTMLQuoteElementProps = MintHTMLAttributes<HTMLQuoteElement> &
+export type HTMLQuoteElementProps = MintHTMLElementProps<HTMLQuoteElement> &
   HTMLQuoteElementAttributes;

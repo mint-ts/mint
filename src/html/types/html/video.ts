@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLVideElementAttributes = {
   height?: number | string | undefined;
@@ -9,5 +9,5 @@ export type HTMLVideElementAttributes = {
   disableRemotePlayback?: boolean | undefined;
 };
 
-export type HTMLVideoElementProps = MintHTMLAttributes<HTMLVideoElement> &
+export type HTMLVideoElementProps = MintHTMLElementProps<HTMLVideoElement> &
   HTMLVideElementAttributes;

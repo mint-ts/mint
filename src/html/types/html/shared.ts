@@ -1,7 +1,7 @@
 import { MintProps } from "../shared";
 import { HTMLAttributes } from "./HTMLAttributes";
 
-export type MintHTMLAttributes<T extends HTMLElement> = MintProps<T> &
+export type MintHTMLElementProps<T extends HTMLElement> = MintProps<T> &
   HTMLAttributes;
 
 export type HTMLAttributeReferrerPolicy =

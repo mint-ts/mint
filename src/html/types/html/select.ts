@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLSelectElementAttributes = {
   autoComplete?: string | undefined;
@@ -11,5 +11,5 @@ export type HTMLSelectElementAttributes = {
   value?: string | ReadonlyArray<string> | number | undefined;
 };
 
-export type HTMLSelectElementProps = MintHTMLAttributes<HTMLSelectElement> &
+export type HTMLSelectElementProps = MintHTMLElementProps<HTMLSelectElement> &
   HTMLSelectElementAttributes;

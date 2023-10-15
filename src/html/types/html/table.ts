@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type TableHTMLAttributes = {
   align?: "left" | "center" | "right" | undefined;
@@ -12,5 +12,5 @@ export type TableHTMLAttributes = {
   width?: number | string | undefined;
 };
 
-export type HTMLTableElementProps = MintHTMLAttributes<HTMLTableElement> &
+export type HTMLTableElementProps = MintHTMLElementProps<HTMLTableElement> &
   TableHTMLAttributes;

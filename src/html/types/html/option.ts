@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLOptionElementAttributes = {
   disabled?: boolean | undefined;
@@ -7,5 +7,5 @@ export type HTMLOptionElementAttributes = {
   value?: string | ReadonlyArray<string> | number | undefined;
 };
 
-export type HTMLOptionElementProps = MintHTMLAttributes<HTMLOptionElement> &
+export type HTMLOptionElementProps = MintHTMLElementProps<HTMLOptionElement> &
   HTMLOptionElementAttributes;

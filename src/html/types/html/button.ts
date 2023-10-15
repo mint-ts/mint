@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLButtonElementAttributes = {
   disabled?: boolean | undefined;
@@ -13,5 +13,5 @@ export type HTMLButtonElementAttributes = {
   value?: string | ReadonlyArray<string> | number | undefined;
 };
 
-export type HTMLButtonElementProps = MintHTMLAttributes<HTMLButtonElement> &
+export type HTMLButtonElementProps = MintHTMLElementProps<HTMLButtonElement> &
   HTMLButtonElementAttributes;
