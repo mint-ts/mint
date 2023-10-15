@@ -1,4 +1,4 @@
-import { HTMLAttributeReferrerPolicy, MintHTMLAttributes } from "./shared";
+import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLIFrameElementAttributes = {
   allow?: string | undefined;
@@ -23,5 +23,5 @@ export type HTMLIFrameElementAttributes = {
   width?: number | string | undefined;
 };
 
-export type HTMLIFrameElementProps = MintHTMLAttributes<HTMLIFrameElement> &
+export type HTMLIFrameElementProps = MintHTMLElementProps<HTMLIFrameElement> &
   HTMLIFrameElementAttributes;

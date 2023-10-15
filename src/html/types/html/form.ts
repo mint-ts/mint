@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLFormElementAttributes = {
   acceptCharset?: string | undefined;
@@ -11,5 +11,5 @@ export type HTMLFormElementAttributes = {
   target?: string | undefined;
 };
 
-export type HTMLFormElementProps = MintHTMLAttributes<HTMLFormElement> &
+export type HTMLFormElementProps = MintHTMLElementProps<HTMLFormElement> &
   HTMLFormElementAttributes;

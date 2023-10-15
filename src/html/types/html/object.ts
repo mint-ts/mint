@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLObjectElementAttributes = {
   classID?: string | undefined;
@@ -12,5 +12,5 @@ export type HTMLObjectElementAttributes = {
   wmode?: string | undefined;
 };
 
-export type HTMLObjectElementProps = MintHTMLAttributes<HTMLObjectElement> &
+export type HTMLObjectElementProps = MintHTMLElementProps<HTMLObjectElement> &
   HTMLObjectElementAttributes;

@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLOListElementAttributes = {
   reversed?: boolean | undefined;
@@ -6,5 +6,5 @@ export type HTMLOListElementAttributes = {
   type?: "1" | "a" | "A" | "i" | "I" | undefined;
 };
 
-export type HTMLOListElementProps = MintHTMLAttributes<HTMLOListElement> &
+export type HTMLOListElementProps = MintHTMLElementProps<HTMLOListElement> &
   HTMLOListElementAttributes;

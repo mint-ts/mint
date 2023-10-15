@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLInputTypeAttribute =
   | "button"
@@ -68,5 +68,5 @@ export type HTMLInputElementAttributes = {
   width?: number | string | undefined;
 };
 
-export type HTMLInputElementProps = MintHTMLAttributes<HTMLInputElement> &
+export type HTMLInputElementProps = MintHTMLElementProps<HTMLInputElement> &
   HTMLInputElementAttributes;

@@ -1,4 +1,4 @@
-import { HTMLAttributeReferrerPolicy, MintHTMLAttributes } from "./shared";
+import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLAttributeAnchorTarget =
   | "_self"
@@ -18,5 +18,5 @@ export type HTMLAnchorElementAtributes = {
   referrerPolicy?: HTMLAttributeReferrerPolicy | undefined;
 };
 
-export type HTMLAnchorElementProps = MintHTMLAttributes<HTMLAnchorElement> &
+export type HTMLAnchorElementProps = MintHTMLElementProps<HTMLAnchorElement> &
   HTMLAnchorElementAtributes;

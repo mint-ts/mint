@@ -1,5 +1,5 @@
 import { CrossOrigin } from "../shared";
-import { HTMLAttributeReferrerPolicy, MintHTMLAttributes } from "./shared";
+import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLImageElementAttributes = {
   alt?: string | undefined;
@@ -15,5 +15,5 @@ export type HTMLImageElementAttributes = {
   width?: number | string | undefined;
 };
 
-export type HTMLImageElementProps = MintHTMLAttributes<HTMLImageElement> &
+export type HTMLImageElementProps = MintHTMLElementProps<HTMLImageElement> &
   HTMLImageElementAttributes;

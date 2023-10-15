@@ -1,4 +1,4 @@
-import { MintHTMLAttributes } from "./shared";
+import { MintHTMLElementProps } from "./shared";
 
 export type HTMLFieldSetElementAttributes = {
   disabled?: boolean | undefined;
@@ -6,5 +6,5 @@ export type HTMLFieldSetElementAttributes = {
   name?: string | undefined;
 };
 
-export type HTMLFieldSetElementProps = MintHTMLAttributes<HTMLFieldSetElement> &
+export type HTMLFieldSetElementProps = MintHTMLElementProps<HTMLFieldSetElement> &
   HTMLFieldSetElementAttributes;
