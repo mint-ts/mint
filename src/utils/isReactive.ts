@@ -1,6 +1,7 @@
 import { Computed, State } from "../reactive";
-import { Reactive } from "../types";
 
-export const isReactive = (value: any): value is Reactive => {
+export const isReactive = (
+  value: any
+): value is State<any> | Computed<any> => {
   return value instanceof State || value instanceof Computed;
 };

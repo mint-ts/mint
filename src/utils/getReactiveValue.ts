@@ -1,4 +1,4 @@
-import { Reactive } from "../types";
+import { Reactive } from "../reactive";
 import { isReactive } from "./isReactive";
 
 export const getReactiveValue = <T>(value: T | Reactive<T>) => {
