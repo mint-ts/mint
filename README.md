@@ -1,5 +1,7 @@
 # 🍃 mint
 
+[![npm version](https://badge.fury.io/js/mint.ts.svg)](https://www.npmjs.com/package/mint.ts)
+
 Frontend framework
 
 > Work in progress - not ready for production 🚧
