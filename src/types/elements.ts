@@ -1,5 +1,12 @@
-import { MintElementValue } from "../elements";
-import { Reactive } from "./reactive";
+import { ElementFactory, MintElementCoreWorksWith } from "../core";
+import { Reactive } from "../reactive";
+
+/** Basic contract for all mint elements */
+export type MintElement = {
+  index: number;
+  parent?: MintElementCoreWorksWith<any>;
+  dispose?: Function;
+};
 
 /** Nodes which are ignored ( not rendered ) */
 export type MintEmptyNode = boolean | null | undefined;
@@ -10,6 +17,6 @@ export type MintTextNode = string | number;
 export type MintNode =
   | MintEmptyNode
   | MintTextNode
-  | Reactive
-  | MintElementValue
+  | ElementFactory<any>
+  | Reactive<any>
   | MintNode[];

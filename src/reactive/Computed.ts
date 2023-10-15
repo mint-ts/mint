@@ -1,49 +1,39 @@
-import { Reactive } from "../types";
-import { SubscribeCallback, UnsubscribeFn } from "./types";
+import { Core } from "../core";
+import { isShallowEqual } from "../utils";
+import { Reactive } from "./types";
 
-export class Computed<Value = any> {
-  constructor(reactives: Reactive[], compute: () => Value) {
+export class Computed<Value> {
+  constructor(
+    deps: Reactive<any>[],
+    compute: () => Value,
+    core: Core<any, any>
+  ) {
+    this.__deps = deps;
+    this._compute = compute;
     this._value = compute();
-    this._prevValue = this._value;
-
-    reactives.forEach((r) => {
-      r.subscribe(() => {
-        this._prevValue = this._value;
-        this._value = compute();
-        this.notify();
-      });
-    });
+    this._core = core;
+    this._core.manager.subscribeComputed(this);
   }
+  private _core;
   private _value;
-  private _prevValue;
-  private _subs = new Set<SubscribeCallback>();
-  public get subs() {
-    return this._subs;
-  }
-  public set subs(value) {
-    this._subs = value;
-  }
+  private __deps;
+  private _compute;
 
   get value() {
     return this._value;
   }
 
-  get prevValue() {
-    return this._prevValue;
+  get _deps() {
+    return this.__deps;
   }
 
-  private notify() {
-    this.subs.forEach((s) => s());
-  }
-
-  subscribe(sub: SubscribeCallback): UnsubscribeFn {
-    this.subs.add(sub);
-    return () => {
-      this.subs.delete(sub);
-    };
+  _recompute() {
+    const prevValue = this._value;
+    this._value = this._compute();
+    return isShallowEqual(prevValue, this._value);
   }
 
   valueOf() {
-    throw new TypeError("Cannot coerce Computed. Use .value instead");
+    throw new TypeError("Cannot coerce a Computed object. Use .value instead.");
   }
 }
