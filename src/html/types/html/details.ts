@@ -1,4 +1,5 @@
 import { MintEventHandler } from "../../../types";
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLDetailsElementAttributes = {
@@ -10,5 +11,5 @@ export type HTMLDetailsElementEvents = {
 };
 
 export type HTMLDetailsElementProps = MintHTMLElementProps<HTMLDetailsElement> &
-  HTMLDetailsElementAttributes &
+  MintReactiveProps<HTMLDetailsElementAttributes> &
   HTMLDetailsElementEvents;

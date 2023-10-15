@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLSourceElementAttributes = {
@@ -11,4 +12,4 @@ export type HTMLSourceElementAttributes = {
 };
 
 export type HTMLSourceElementProps = MintHTMLElementProps<HTMLSourceElement> &
-  HTMLSourceElementAttributes;
+  MintReactiveProps<HTMLSourceElementAttributes>;

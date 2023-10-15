@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLAreaElementAttributes = {
@@ -13,4 +14,4 @@ export type HTMLAreaElementAttributes = {
 };
 
 export type HTMLAreaElementProps = MintHTMLElementProps<HTMLAreaElement> &
-  HTMLAreaElementAttributes;
+  MintReactiveProps<HTMLAreaElementAttributes>;

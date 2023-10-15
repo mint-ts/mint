@@ -1,4 +1,4 @@
-import { CrossOrigin } from "../shared";
+import { CrossOrigin, MintReactiveProps } from "../shared";
 import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLImageElementAttributes = {
@@ -16,4 +16,4 @@ export type HTMLImageElementAttributes = {
 };
 
 export type HTMLImageElementProps = MintHTMLElementProps<HTMLImageElement> &
-  HTMLImageElementAttributes;
+  MintReactiveProps<HTMLImageElementAttributes>;

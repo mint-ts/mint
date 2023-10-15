@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLQuoteElementAttributes = {
@@ -5,4 +6,4 @@ export type HTMLQuoteElementAttributes = {
 };
 
 export type HTMLQuoteElementProps = MintHTMLElementProps<HTMLQuoteElement> &
-  HTMLQuoteElementAttributes;
+  MintReactiveProps<HTMLQuoteElementAttributes>;

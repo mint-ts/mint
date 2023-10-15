@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLFieldSetElementAttributes = {
@@ -6,5 +7,6 @@ export type HTMLFieldSetElementAttributes = {
   name?: string | undefined;
 };
 
-export type HTMLFieldSetElementProps = MintHTMLElementProps<HTMLFieldSetElement> &
-  HTMLFieldSetElementAttributes;
+export type HTMLFieldSetElementProps =
+  MintHTMLElementProps<HTMLFieldSetElement> &
+    MintReactiveProps<HTMLFieldSetElementAttributes>;

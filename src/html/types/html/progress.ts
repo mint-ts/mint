@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLProgressElementAttributes = {
@@ -5,5 +6,6 @@ export type HTMLProgressElementAttributes = {
   value?: string | ReadonlyArray<string> | number | undefined;
 };
 
-export type HTMLProgressElementProps = MintHTMLElementProps<HTMLProgressElement> &
-  HTMLProgressElementAttributes;
+export type HTMLProgressElementProps =
+  MintHTMLElementProps<HTMLProgressElement> &
+    MintReactiveProps<HTMLProgressElementAttributes>;

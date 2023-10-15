@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLEmbedElementAttributes = {
@@ -8,4 +9,4 @@ export type HTMLEmbedElementAttributes = {
 };
 
 export type HTMLEmbedElementProps = MintHTMLElementProps<HTMLEmbedElement> &
-  HTMLEmbedElementAttributes;
+  MintReactiveProps<HTMLEmbedElementAttributes>;

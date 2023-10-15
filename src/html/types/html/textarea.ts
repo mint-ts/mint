@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLTextAreaAttributes = {
@@ -18,4 +19,4 @@ export type HTMLTextAreaAttributes = {
 };
 
 export type HTMLTextAreaProps = MintHTMLElementProps<HTMLTextAreaElement> &
-  HTMLTextAreaAttributes;
+  MintReactiveProps<HTMLTextAreaAttributes>;

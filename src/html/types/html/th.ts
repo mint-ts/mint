@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLTableHeaderCellElementAttributes = {
@@ -11,4 +12,4 @@ export type HTMLTableHeaderCellElementAttributes = {
 
 export type HTMLTableHeaderCellElementProps =
   MintHTMLElementProps<HTMLTableCellElement> &
-    HTMLTableHeaderCellElementAttributes;
+    MintReactiveProps<HTMLTableHeaderCellElementAttributes>;

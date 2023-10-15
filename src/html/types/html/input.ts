@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLInputTypeAttribute =
@@ -69,4 +70,4 @@ export type HTMLInputElementAttributes = {
 };
 
 export type HTMLInputElementProps = MintHTMLElementProps<HTMLInputElement> &
-  HTMLInputElementAttributes;
+  MintReactiveProps<HTMLInputElementAttributes>;

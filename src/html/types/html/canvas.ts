@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLCanvasElementAttributes = {
@@ -6,4 +7,4 @@ export type HTMLCanvasElementAttributes = {
 };
 
 export type HTMLCanvasElementProps = MintHTMLElementProps<HTMLCanvasElement> &
-  HTMLCanvasElementAttributes;
+  MintReactiveProps<HTMLCanvasElementAttributes>;

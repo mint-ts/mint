@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLAttributeAnchorTarget =
@@ -19,4 +20,4 @@ export type HTMLAnchorElementAtributes = {
 };
 
 export type HTMLAnchorElementProps = MintHTMLElementProps<HTMLAnchorElement> &
-  HTMLAnchorElementAtributes;
+  MintReactiveProps<HTMLAnchorElementAtributes>;

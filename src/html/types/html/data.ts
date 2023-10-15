@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLDataElementAttributes = {
@@ -5,4 +6,4 @@ export type HTMLDataElementAttributes = {
 };
 
 export type HTMLDataElementProps = MintHTMLElementProps<HTMLDataElement> &
-  HTMLDataElementAttributes;
+  MintReactiveProps<HTMLDataElementAttributes>;

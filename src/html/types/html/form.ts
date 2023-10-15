@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLFormElementAttributes = {
@@ -12,4 +13,4 @@ export type HTMLFormElementAttributes = {
 };
 
 export type HTMLFormElementProps = MintHTMLElementProps<HTMLFormElement> &
-  HTMLFormElementAttributes;
+  MintReactiveProps<HTMLFormElementAttributes>;

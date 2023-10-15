@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLButtonElementAttributes = {
@@ -14,4 +15,4 @@ export type HTMLButtonElementAttributes = {
 };
 
 export type HTMLButtonElementProps = MintHTMLElementProps<HTMLButtonElement> &
-  HTMLButtonElementAttributes;
+  MintReactiveProps<HTMLButtonElementAttributes>;

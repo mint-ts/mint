@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLVideElementAttributes = {
@@ -10,4 +11,4 @@ export type HTMLVideElementAttributes = {
 };
 
 export type HTMLVideoElementProps = MintHTMLElementProps<HTMLVideoElement> &
-  HTMLVideElementAttributes;
+  MintReactiveProps<HTMLVideElementAttributes>;

@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLOptionElementAttributes = {
@@ -8,4 +9,4 @@ export type HTMLOptionElementAttributes = {
 };
 
 export type HTMLOptionElementProps = MintHTMLElementProps<HTMLOptionElement> &
-  HTMLOptionElementAttributes;
+  MintReactiveProps<HTMLOptionElementAttributes>;

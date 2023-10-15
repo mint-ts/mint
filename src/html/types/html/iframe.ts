@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLIFrameElementAttributes = {
@@ -24,4 +25,4 @@ export type HTMLIFrameElementAttributes = {
 };
 
 export type HTMLIFrameElementProps = MintHTMLElementProps<HTMLIFrameElement> &
-  HTMLIFrameElementAttributes;
+  MintReactiveProps<HTMLIFrameElementAttributes>;

@@ -1,4 +1,5 @@
 import { MintEventHandler } from "../../../types";
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLDialogElementAttributes = {
@@ -11,5 +12,5 @@ export type HTMLDialogElementEvents = {
 };
 
 export type HTMLDialogElementProps = MintHTMLElementProps<HTMLDialogElement> &
-  HTMLDialogElementAttributes &
+  MintReactiveProps<HTMLDialogElementAttributes> &
   HTMLDialogElementEvents;

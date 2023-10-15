@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLKeygenElementAttributes = {
@@ -10,4 +11,4 @@ export type HTMLKeygenElementAttributes = {
 };
 
 export type HTMLKeygenElementProps = MintHTMLElementProps<HTMLElement> &
-  HTMLKeygenElementAttributes;
+  MintReactiveProps<HTMLKeygenElementAttributes>;

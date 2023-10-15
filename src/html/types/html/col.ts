@@ -1,3 +1,4 @@
+import { MintReactiveProps } from "../shared";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLTableColElementAttributes = {
@@ -5,5 +6,6 @@ export type HTMLTableColElementAttributes = {
   width?: number | string | undefined;
 };
 
-export type HTMLTableColElementProps = MintHTMLElementProps<HTMLTableColElement> &
-  HTMLTableColElementAttributes;
+export type HTMLTableColElementProps =
+  MintHTMLElementProps<HTMLTableColElement> &
+    MintReactiveProps<HTMLTableColElementAttributes>;
