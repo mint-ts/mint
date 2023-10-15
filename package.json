@@ -1,6 +1,6 @@
 {
   "name": "mint.ts",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "",
   "type": "module",
   "main": "dist/index.cjs",
