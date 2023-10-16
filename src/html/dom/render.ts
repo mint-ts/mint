@@ -17,5 +17,7 @@ export const render = (node: MintNode, container: HTMLElement) => {
 
   const domNodes = core.createNodes(elements, rootEl);
 
-  container.append(...domNodes);
+  requestAnimationFrame(() => {
+    container.append(...domNodes);
+  });
 };

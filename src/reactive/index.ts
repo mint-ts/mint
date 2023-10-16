@@ -1,3 +1,4 @@
-export * from "./Computed";
-export * from "./State";
+export * from "./createComputed";
+export * from "./createState";
 export * from "./types";
+export * from "./utils";

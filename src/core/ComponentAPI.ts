@@ -1,4 +1,4 @@
-import { State } from "../reactive";
+import { Reactive, createComputed, createState } from "../reactive";
 import { Context } from "./Context";
 import { Core } from "./Core";
 import { CoreElement, MintComponentElement, isElementOfType } from "./elements";
@@ -16,11 +16,21 @@ export class ComponentAPI<Props> {
   }
 
   state<Value>(initialValue: Value) {
-    const _state = new State(initialValue, this._core, (c) => {
-      this._component.computed.push(c);
+    const _state = createState({
+      initialValue,
+      core: this._core,
+      addComputed: (c) => {
+        this._component.computed.push(c);
+      },
     });
     this._component.state.push(_state);
     return _state;
+  }
+
+  computed<Value>(deps: Reactive<any>[], computeFn: () => Value) {
+    const computed = createComputed({ deps, computeFn, core: this._core });
+    this._component.computed.push(computed);
+    return computed;
   }
 
   getContext<Value>(context: Context<Value>) {
@@ -40,10 +50,6 @@ export class ComponentAPI<Props> {
     return {} as Value;
   }
 }
-
-// computed<Value>(deps: Reactive<any>[], computeFn: () => Value) {
-//   return new ComputedReactive(deps, computeFn, this._app);
-// }
 
 // effect(deps: Reactive<any>[], run: () => any) {
 // this._component.addEffect(new Effect(deps, run));

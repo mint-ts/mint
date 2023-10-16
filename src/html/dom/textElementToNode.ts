@@ -1,5 +1,6 @@
 import { Core } from "../../core";
-import { getReactiveValue, isReactive } from "../../utils";
+import { isReactive } from "../../reactive";
+import { getReactiveValue } from "../../utils";
 import { HtmlSupportedElements, TextElement } from "../elements";
 import { DomNode } from "./types";
 

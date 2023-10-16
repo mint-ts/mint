@@ -12,6 +12,7 @@ export type HtmlElement = MintElement & {
   htmlNode?: HtmlElementNode;
   children: MintElementCoreWorksWith<any>[];
   isSvg: boolean;
+  disposers: Function[];
 };
 
 export type TextElement = MintElement & {
@@ -38,6 +39,7 @@ export const createHtmlElement = (
   children,
   index: 0,
   isSvg,
+  disposers: [],
 });
 
 export const createTextElement = (

@@ -1,5 +1,5 @@
+import { isReactive } from "../../reactive";
 import { MintNode } from "../../types";
-import { isReactive } from "../../utils";
 import { createTextElement } from "../elements";
 import { isTextNode } from "../isTextNode";
 

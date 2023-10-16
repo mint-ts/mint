@@ -1,5 +1,5 @@
 import { Core, ListElementCacheItem, MintListElement } from "../../core";
-import { State } from "../../reactive";
+import { createState } from "../../reactive";
 import { findNearestHtmlElementAncestor } from "./findNearestHtmlElementAncestor";
 import { DomNode, ListPatchItem } from "./types";
 
@@ -14,7 +14,7 @@ export const createPatchList = (core: Core<any, DomNode>) => {
     const ancestorNode = htmlAncestor.domNode!;
 
     const renderItem = (item: any, index: number) => {
-      const stateIndex = new State(index, core);
+      const stateIndex = createState({ initialValue: index, core });
       const computedIndex = stateIndex.derive((i) => i);
 
       const els = core.createElements(el.renderItem(item, computedIndex));

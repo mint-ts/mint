@@ -1,4 +1,4 @@
-import { State } from "../reactive";
+import { createState } from "../reactive";
 import { MintElement, MintNode, MintRenderer } from "../types";
 import { ComponentAPI } from "./ComponentAPI";
 import { SubscriptionManager } from "./SubscriptionManager";
@@ -180,7 +180,7 @@ export class Core<RendererElement extends MintElement, Node> {
     });
     const elements = el.reactiveArray.value
       .map((item, index) => {
-        const stateIndex = new State(index, this);
+        const stateIndex = createState({ initialValue: index, core: this });
         const computedIndex = stateIndex.derive((i) => i);
         const nodes = el.renderItem(item, computedIndex);
         const els = this.createElements(nodes);

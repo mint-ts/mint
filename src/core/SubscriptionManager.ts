@@ -22,7 +22,7 @@ export class SubscriptionManager {
   }
 
   subscribeComputed(c: Computed<any>) {
-    c._deps.forEach((d) => {
+    c.deps.forEach((d) => {
       this.getReactiveSubscribers(d).add(c);
     });
   }
