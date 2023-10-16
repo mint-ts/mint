@@ -17,5 +17,4 @@ const Counter = component(($) => {
     h.button({ onClick: () => count.value++ }),
   ];
 });
-Ø;
 ```
