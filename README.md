@@ -12,9 +12,10 @@ const Counter = component(($) => {
   const doubleCount = count.derive((v) => v * 2);
 
   return [
-    h.div("Count is: ", count),
-    h.div("Double count is: ", doubleCount),
+    h.div({ c: ["Count is: ", count] }),
+    h.div({ c: ["Double count is: ", doubleCount] }),
     h.button({ onClick: () => count.value++ }),
   ];
 });
+Ø;
 ```
