@@ -13,17 +13,41 @@ import {
 } from "./elements";
 import { isEmptyNode } from "./isEmptyNode";
 
+type CoreArgs<
+  RendererElement extends MintElement,
+  Node,
+  RenderResult = void
+> = {
+  rootNode: MintNode;
+  createRenderer: (
+    core: Core<RendererElement, Node>
+  ) => MintRenderer<any, Node>;
+  createRootElement: (
+    rootElements: MintElementCoreWorksWith<RendererElement>[]
+  ) => RendererElement;
+  render: (nodes: Node[]) => RenderResult;
+  manager?: SubscriptionManager;
+};
+
 export class Core<RendererElement extends MintElement, Node> {
-  constructor(
-    createRenderer: (
-      core: Core<RendererElement, Node>
-    ) => MintRenderer<any, Node>
-  ) {
+  constructor({
+    rootNode,
+    createRenderer,
+    manager,
+    render,
+  }: CoreArgs<RendererElement, Node>) {
+    this.rootNode = rootNode;
     this.renderer = createRenderer(this);
-    this.manager = new SubscriptionManager(this.renderer.flushUpdates);
+    this.manager =
+      manager ?? new SubscriptionManager(this.renderer.flushUpdates);
+    this.rootElements = this.createElements(this.rootNode);
+    this.render = render;
   }
+  rootNode;
   renderer;
   manager;
+  rootElements;
+  render;
 
   createElements(...nodes: MintNode[]) {
     const elements: MintElementCoreWorksWith<RendererElement>[] = [];
@@ -207,5 +231,10 @@ export class Core<RendererElement extends MintElement, Node> {
     this.destroyNodes(cacheItem.els);
     this.manager.deleteMany(cacheItem.stateIndex, cacheItem.computedIndex);
     el.cache.delete(item);
+  }
+
+  start() {
+    const nodes = this.createNodes(this.rootElements);
+    return this.render(nodes);
   }
 }

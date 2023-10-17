@@ -1,5 +1,6 @@
+import { MintReactiveProps } from "../../../types";
 import { AriaAttributes } from "../aria";
-import { MintProps, MintReactiveProps } from "../shared";
+import { MintProps } from "../shared";
 import { HTMLAttributes } from "./HTMLAttributes";
 
 export type MintHTMLElementProps<T extends HTMLElement> = MintProps<T> &

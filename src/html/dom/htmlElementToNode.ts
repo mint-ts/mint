@@ -1,10 +1,11 @@
-import { DomNode } from ".";
+import { draw } from "../../canvas";
 import { Core } from "../../core";
 import { isReactive } from "../../reactive";
 import { getReactiveValue } from "../../utils";
 import { HtmlElement, HtmlSupportedElements } from "../elements";
 import { getEventTypeFromPropKey } from "./getEventTypeFromPropKey";
 import { isEventProp } from "./isEventProp";
+import { DomNode } from "./types";
 
 export const createHtmlElementToNode = (
   core: Core<HtmlSupportedElements, DomNode>
@@ -41,7 +42,13 @@ export const createHtmlElementToNode = (
       : document.createElement(el.tag);
     el.domNode = dom;
 
-    if (el.tag !== "canvas") {
+    if (el.tag === "canvas" && el.children.length > 0) {
+      setTimeout(() => {
+        draw(el.children, dom as HTMLCanvasElement, core);
+      });
+    }
+    //
+    else {
       dom.append(...core.createNodes(el.children, el));
     }
 

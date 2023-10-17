@@ -1,4 +1,5 @@
-import { CrossOrigin, MintReactiveProps } from "../shared";
+import { MintReactiveProps } from "../../../types";
+import { CrossOrigin } from "../shared";
 import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLLinkElementAttributes = {

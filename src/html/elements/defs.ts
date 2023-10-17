@@ -7,7 +7,7 @@ import { HtmlElementNode, TextElementHtmlNode } from "../string";
 export type HtmlElement = MintElement & {
   _type: typeof HTML_ELEMENT_TYPE;
   tag: string;
-  props: any;
+  props: Record<string, any>;
   domNode?: HTMLElement | SVGElement;
   htmlNode?: HtmlElementNode;
   children: MintElementCoreWorksWith<any>[];

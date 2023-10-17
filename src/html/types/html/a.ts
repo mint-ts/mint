@@ -1,4 +1,4 @@
-import { MintReactiveProps } from "../shared";
+import { MintReactiveProps } from "../../../types";
 import { HTMLAttributeReferrerPolicy, MintHTMLElementProps } from "./shared";
 
 export type HTMLAttributeAnchorTarget =
