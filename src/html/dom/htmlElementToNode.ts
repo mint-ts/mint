@@ -1,4 +1,3 @@
-import { draw } from "../../canvas";
 import { Core } from "../../core";
 import { isReactive } from "../../reactive";
 import { getReactiveValue } from "../../utils";
@@ -43,9 +42,9 @@ export const createHtmlElementToNode = (
     el.domNode = dom;
 
     if (el.tag === "canvas" && el.children.length > 0) {
-      setTimeout(() => {
-        draw(el.children, dom as HTMLCanvasElement, core);
-      });
+      // setTimeout(() => {
+      //   draw(el.children, dom as HTMLCanvasElement, core);
+      // });
     }
     //
     else {
