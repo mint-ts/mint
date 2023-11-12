@@ -12,8 +12,8 @@ const Counter = component(($) => {
   const doubleCount = $.computed(() => count.value * 2);
 
   return [
-    h.div({ c: ["Count is: ", count] }),
-    h.div({ c: ["Double count is: ", doubleCount] }),
+    h.div({ node: ["Count is: ", count] }),
+    h.div({ node: ["Double count is: ", doubleCount] }),
     h.button({ onClick: () => count.value++ }),
   ];
 });
