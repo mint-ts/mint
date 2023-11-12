@@ -9,7 +9,7 @@ Frontend framework
 ```ts
 const Counter = component(($) => {
   const count = $.state(0);
-  const doubleCount = count.derive((v) => v * 2);
+  const doubleCount = $.computed(() => count.value * 2);
 
   return [
     h.div({ c: ["Count is: ", count] }),
