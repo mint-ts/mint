@@ -1,27 +1,13 @@
-import { createElementFactory } from "../../core";
+import { ElementFactory } from "../../core";
 import { HTMLElementPropMap, SVGElementPropMap } from "../types";
-import { createHtmlElement } from "./defs";
+import { HtmlElement } from "./HtmlElement";
 import { htmlTags } from "./htmlTags";
 import { svgTags } from "./svgTags";
 
 const html =
   <Tag extends AllKeys>(tag: Tag) =>
   (props?: AllMap[Tag]) => {
-    const { c: children, ...rest } = props ?? {};
-    let c = children ?? [];
-    if (!Array.isArray(c)) {
-      c = [c];
-    }
-    const isSvg = svgTags.includes(tag as any);
-
-    return createElementFactory((core) =>
-      createHtmlElement(
-        tag,
-        rest ?? {},
-        core.createElements(...(c as any)),
-        isSvg
-      )
-    );
+    return new ElementFactory((api) => new HtmlElement(tag, props ?? {}, api));
   };
 
 const allTags = [...htmlTags, ...svgTags];

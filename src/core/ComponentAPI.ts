@@ -1,45 +1,40 @@
-import { Reactive, createComputed, createState } from "../reactive";
 import { Context } from "./Context";
-import { Core } from "./Core";
-import { CoreElement, MintComponentElement, isElementOfType } from "./elements";
+import { ComponentElement } from "./elements";
+import { Computed, State } from "./reactive";
+import { MintNode } from "./types";
+import { isCoreObjectOfType } from "./utils";
 
-export class ComponentAPI<Props> {
-  constructor(component: MintComponentElement<Props>, core: Core<any, any>) {
-    this._component = component;
-    this._core = core;
+export class ComponentApi<Props> {
+  constructor(el: ComponentElement<Props>) {
+    this._el = el;
   }
-  private _component;
-  private _core;
+  _el;
 
   get props() {
-    return this._component.props;
+    return this._el.props;
   }
 
   state<Value>(initialValue: Value) {
-    const _state = createState({
-      initialValue,
-      core: this._core,
-      addComputed: (c) => {
-        this._component.computed.push(c);
-      },
-    });
-    this._component.state.push(_state);
+    const _state = new State(initialValue, this._el.api.manager);
+    // this._el.state.push(_state);
     return _state;
   }
 
-  computed<Value>(deps: Reactive<any>[], computeFn: () => Value) {
-    const computed = createComputed({ deps, computeFn, core: this._core });
-    this._component.computed.push(computed);
+  computed<Value>(getter: () => Value) {
+    const computed = new Computed(getter, this._el.api.manager);
     return computed;
   }
 
   getContext<Value>(context: Context<Value>) {
-    let current: CoreElement | undefined = this._component;
+    let current: any | undefined = this._el;
 
     if (!current) return {} as Value;
 
     while (current) {
-      if (isElementOfType(current, "provider") && current.context === context) {
+      if (
+        isCoreObjectOfType(current, "provider") &&
+        current.context === context
+      ) {
         return current.value as Value;
       }
       current = current.parent;
@@ -49,12 +44,12 @@ export class ComponentAPI<Props> {
 
     return {} as Value;
   }
+
+  pending(node: MintNode) {
+    const elements = this._el.api.createElements(node);
+    // this._el.data.pendingEls = elements;
+    const nodes = this._el.api.create(elements, this._el);
+    // this._el.api.insertElements(this._el, elements, nodes);
+    // this._el.api.update();
+  }
 }
-
-// effect(deps: Reactive<any>[], run: () => any) {
-// this._component.addEffect(new Effect(deps, run));
-// }
-
-// query<Data>(options: QueryOptions<Data>) {
-//   return new Query(options);
-// }

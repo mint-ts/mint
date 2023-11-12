@@ -1,5 +1,5 @@
-import { MintEventHandler } from "../../../types";
-import { MintReactiveProps } from "../../../types";
+import { MintReactiveProps } from "../../../core";
+import { DomEventHandler } from "../events";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLDetailsElementAttributes = {
@@ -7,7 +7,7 @@ export type HTMLDetailsElementAttributes = {
 };
 
 export type HTMLDetailsElementEvents = {
-  onToggle?: MintEventHandler<HTMLDetailsElement> | undefined;
+  onToggle?: DomEventHandler<HTMLDetailsElement> | undefined;
 };
 
 export type HTMLDetailsElementProps = MintHTMLElementProps<HTMLDetailsElement> &

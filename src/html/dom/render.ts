@@ -1,26 +1,9 @@
-import { Core } from "../../core";
-import { MintNode } from "../../types";
-import { createHtmlElement } from "../elements";
-import { createDomRenderer } from "./createDomRenderer";
+import { MintApi, MintNode } from "../../core";
+import { DomRenderer } from "./DomRenderer";
 
 export const render = (node: MintNode, container: HTMLElement) => {
-  const core = new Core({
-    rootNode: node,
-    createRenderer: createDomRenderer,
-    createRootElement: (rootElements) => {
-      return createHtmlElement(
-        container.tagName.toLowerCase(),
-        {},
-        rootElements,
-        false
-      );
-    },
-    render: (nodes) => {
-      requestAnimationFrame(() => {
-        container.innerHTML = "";
-        container.append(...nodes);
-      });
-    },
+  const api = new MintApi({
+    createRenderer: (api) => new DomRenderer(api, container),
   });
-  core.start();
+  api.run(node);
 };

@@ -1,9 +1,9 @@
-import { MintReactiveProps } from "../../../types";
+import { MintReactiveProps } from "../../../core";
 import { AriaAttributes } from "../aria";
-import { MintProps } from "../shared";
+import { MintDomProps } from "../shared";
 import { HTMLAttributes } from "./HTMLAttributes";
 
-export type MintHTMLElementProps<T extends HTMLElement> = MintProps<T> &
+export type MintHTMLElementProps<T extends HTMLElement> = MintDomProps<T> &
   MintReactiveProps<HTMLAttributes & AriaAttributes>;
 
 export type HTMLAttributeReferrerPolicy =

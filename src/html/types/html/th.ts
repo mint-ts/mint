@@ -1,4 +1,4 @@
-import { MintReactiveProps } from "../../../types";
+import { MintReactiveProps } from "../../../core";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLTableHeaderCellElementAttributes = {

@@ -1,5 +1,5 @@
-import { MintEventHandler } from "../../../types";
-import { MintReactiveProps } from "../../../types";
+import { MintReactiveProps } from "../../../core";
+import { DomEventHandler } from "../events";
 import { MintHTMLElementProps } from "./shared";
 
 export type HTMLDialogElementAttributes = {
@@ -7,8 +7,8 @@ export type HTMLDialogElementAttributes = {
 };
 
 export type HTMLDialogElementEvents = {
-  onCancel?: MintEventHandler<HTMLDialogElement> | undefined;
-  onClose?: MintEventHandler<HTMLDialogElement> | undefined;
+  onCancel?: DomEventHandler<HTMLDialogElement> | undefined;
+  onClose?: DomEventHandler<HTMLDialogElement> | undefined;
 };
 
 export type HTMLDialogElementProps = MintHTMLElementProps<HTMLDialogElement> &

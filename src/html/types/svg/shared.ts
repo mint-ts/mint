@@ -1,7 +1,7 @@
-import { MintReactiveProps } from "../../../types";
+import { MintReactiveProps } from "../../../core";
 import { AriaAttributes } from "../aria";
-import { MintProps } from "../shared";
+import { MintDomProps } from "../shared";
 import { SVGAttributes } from "./SvgAttributes";
 
-export type SVGProps<T extends SVGElement> = MintProps<T> &
+export type SVGProps<T extends SVGElement> = MintDomProps<T> &
   MintReactiveProps<SVGAttributes & AriaAttributes>;

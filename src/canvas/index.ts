@@ -1,4 +1,4 @@
-export * from "./createCanvasRenderer";
+export * from "./CanvasElement";
+export * from "./c";
 export * from "./draw";
-export * from "./elements";
 export * from "./types";
