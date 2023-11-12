@@ -12,11 +12,11 @@ export class TextElement implements MintElement {
   constructor(public text: string | Reactive<string>, public api: MintApi) {}
   _type = TYPE_MAP.text;
   index = 0;
-  node?: Text;
+  node?: any;
   effect?: Effect;
 
   create() {
-    if (this.api.renderer._type === "html") {
+    if ((this.api.renderer as any)._type === "html") {
       this.node = this;
     }
     //

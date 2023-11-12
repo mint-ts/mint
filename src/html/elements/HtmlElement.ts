@@ -26,7 +26,7 @@ export class HtmlElement implements MintElement {
   effects = new Set<Effect>();
 
   create() {
-    if (this.api.renderer._type === "html") {
+    if ((this.api.renderer as any)._type === "html") {
       this.api.create(this.children, this);
       this.node = this;
     }
