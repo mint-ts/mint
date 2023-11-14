@@ -21,7 +21,7 @@ export class TextElement implements MintElement {
     }
     //
     else {
-      this.createDomNode();
+      return this.createDomNode();
     }
   }
 
@@ -45,9 +45,10 @@ export class TextElement implements MintElement {
       );
       this.effect.run();
     }
-    //
+
     const txt = document.createTextNode(getReactiveValue(this.text));
     this.node = txt;
+    return this.node;
   }
 
   destroy() {

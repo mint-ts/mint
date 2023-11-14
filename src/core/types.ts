@@ -15,7 +15,7 @@ export interface MintElement {
   api: MintApi;
   node?: any;
   children?: MintElement[];
-  create(): void;
+  create(): any[] | any;
   destroy(): void;
 }
 

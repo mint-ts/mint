@@ -61,16 +61,14 @@ export class DomRenderer implements MintRenderer<DomNode> {
 
   createInsertNodesJob(parentEl: MintElement, nodes: DomNode[]): Job {
     return () => {
-      let nodeAfter = null;
       const len = nodes.length;
       const htmlAncestor = this.findNearestHtmlElementAncestor(parentEl);
 
       if (!htmlAncestor.node) return;
 
-      for (let i = len - 1; i >= 0; i--) {
+      for (let i = 0; i < len; i++) {
         const node = nodes[i];
-        htmlAncestor.node.insertBefore(node, nodeAfter);
-        nodeAfter = node;
+        htmlAncestor.node.insertBefore(node, null);
       }
     };
   }

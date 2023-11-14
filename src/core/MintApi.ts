@@ -83,13 +83,23 @@ export class MintApi {
     startIndex = 0
   ) {
     const len = elements.length;
+    const nodes: any[] = [];
 
     for (let i = 0; i < len; i++) {
       const el = elements[i];
       el.index = startIndex + i;
       el.parent = parent;
-      el.create();
+      const result = el.create();
+
+      if (Array.isArray(result)) {
+        nodes.push(...result);
+      }
+      //
+      else {
+        nodes.push(result);
+      }
     }
+    return nodes;
   }
 
   addJob(job: Job) {
@@ -104,9 +114,8 @@ export class MintApi {
     }
   }
 
-  insertElements(el: MintParentElement, els: MintElement[]) {
+  insertElements(el: MintParentElement, els: MintElement[], nodes: any[]) {
     if (this.renderer.createInsertNodesJob) {
-      const nodes = this.getNodes(els);
       const job = this.renderer.createInsertNodesJob(el, nodes);
       this.addJob(job);
     }

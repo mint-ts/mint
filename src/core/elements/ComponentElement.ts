@@ -38,7 +38,7 @@ export class ComponentElement<Props> implements MintElement {
     // }
     const elements = this.api.createElements(node as MintNode);
     this.children = elements;
-    this.api.create(this.children, this);
+    return this.api.create(this.children, this);
   }
 
   destroy() {

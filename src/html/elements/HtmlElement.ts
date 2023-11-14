@@ -32,7 +32,7 @@ export class HtmlElement implements MintElement {
     }
     //
     else {
-      this.createDomNode();
+      return this.createDomNode();
     }
   }
 
@@ -46,7 +46,10 @@ export class HtmlElement implements MintElement {
 
     dom.append(...this.api.getNodes(this.children));
 
-    for (const [key, value] of Object.entries(this.props)) {
+    const keys = Object.keys(this.props);
+
+    for (const key of keys) {
+      const value = this.props[key];
       if (isEventProp(key)) {
         dom.addEventListener(this.getEventTypeFromPropKey(key), value as any);
       }
@@ -78,9 +81,7 @@ export class HtmlElement implements MintElement {
         this.effects.add(effect);
         effect.run();
         this.setAttributeOrProp(key, value.value);
-      }
-      //
-      else {
+      } else {
         this.setAttributeOrProp(key, value);
       }
     }
@@ -91,8 +92,10 @@ export class HtmlElement implements MintElement {
   setAttributeOrProp(key: string, value: any) {
     if (!this.node) return;
     if (key === "style") {
-      for (const [key, styleValue] of Object.entries(value as any) as any) {
-        let v = styleValue;
+      const keys = Object.keys(value);
+
+      for (const key of keys) {
+        let v = value[key];
 
         if (typeof v === "number") {
           v = `${v}px`;

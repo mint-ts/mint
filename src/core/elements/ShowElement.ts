@@ -21,10 +21,6 @@ export class ShowElement implements MintElement {
   effect: Effect | undefined;
 
   create() {
-    const condition = Boolean(this.reactive.value);
-    this.prevCondition = condition;
-    this.children = condition ? this.trueEls : this.falseEls;
-    this.api.create(this.children, this);
     this.effect = new Effect(
       () => this.reactive.value,
       this.api.manager,
@@ -33,6 +29,10 @@ export class ShowElement implements MintElement {
       }
     );
     this.effect.run();
+    const condition = Boolean(this.reactive.value);
+    this.prevCondition = condition;
+    this.children = condition ? this.trueEls : this.falseEls;
+    return this.api.create(this.children, this);
   }
 
   patch() {

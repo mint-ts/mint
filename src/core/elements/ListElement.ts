@@ -21,6 +21,14 @@ export class ListElement<Item> implements MintElement {
   effect?: Effect;
 
   create() {
+    this.effect = new Effect(
+      () => this.reactive.value,
+      this.api.manager,
+      () => {
+        this.patch();
+      }
+    );
+    this.effect.run();
     this.cache = new Map();
     this.prevValue = [...this.reactive.value];
 
@@ -39,16 +47,7 @@ export class ListElement<Item> implements MintElement {
     }
     this.children = elements;
 
-    this.api.create(this.children, this);
-
-    this.effect = new Effect(
-      () => this.reactive.value,
-      this.api.manager,
-      () => {
-        this.patch();
-      }
-    );
-    this.effect.run();
+    return this.api.create(this.children, this);
   }
 
   renderItem(item: Item, index: number) {
@@ -91,6 +90,8 @@ export class ListElement<Item> implements MintElement {
     }
     // fast path for prev empty
     else if (oldLen === 0) {
+      const nodesToBeInserted = [];
+
       for (let i = 0; i < newLen; i++) {
         const item = newItems[i];
 
@@ -98,11 +99,13 @@ export class ListElement<Item> implements MintElement {
 
         this.cache.set(item, cacheItem);
 
-        this.api.create(cacheItem.els, this, i);
+        const nodes = this.api.create(cacheItem.els, this, i);
+        nodesToBeInserted.push(...nodes);
 
         this.children.push(...cacheItem.els);
       }
-      this.api.insertElements(this, this.children);
+
+      this.api.insertElements(this, this.children, nodesToBeInserted);
     }
     //
     else {
@@ -160,6 +163,7 @@ export class ListElement<Item> implements MintElement {
       }
 
       let elsToBeInserted = [];
+      const nodesToBeInserted = [];
 
       // finally patch
       for (let i = 0; i < patchItems.length; i++) {
@@ -167,18 +171,21 @@ export class ListElement<Item> implements MintElement {
 
         if (patchItem.oldIndex != null) {
           if (patchItem.oldIndex !== patchItem.newIndex) {
+            const nodes = this.api.getNodes(patchItem.els);
+            nodesToBeInserted.push(...nodes);
             elsToBeInserted.push(...patchItem.els);
           }
         }
         //
         else {
-          this.api.create(patchItem.els, this, i);
+          const nodes = this.api.create(patchItem.els, this, i);
+          nodesToBeInserted.push(...nodes);
           elsToBeInserted.push(...patchItem.els);
         }
       }
 
       this.api.destroy(elsToBeRemoved);
-      this.api.insertElements(this, elsToBeInserted);
+      this.api.insertElements(this, elsToBeInserted, nodesToBeInserted);
 
       this.cache = new Map(newCache);
     }
